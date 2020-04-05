@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-    public void goToMap( View view )
-    {
-        Intent intent = new Intent( this, MapActivity.class );
-        startActivity( intent );
-    }
+//    public void goToMap( View view )
+//    {
+//        Intent intent = new Intent( this, MapActivity.class );
+//        startActivity( intent );
+//    }
 }
