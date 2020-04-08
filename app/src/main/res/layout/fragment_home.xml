@@ -9,14 +9,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="312dp"
-        android:layout_height="296dp"
+        android:layout_width="359dp"
+        android:layout_height="311dp"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintVertical_bias="0.076" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
