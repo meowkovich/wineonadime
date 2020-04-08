@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         openFragment(HomeFragment.newInstance("", ""));
 
 
+
+
+
     }
 
     public void openFragment(Fragment fragment) {
