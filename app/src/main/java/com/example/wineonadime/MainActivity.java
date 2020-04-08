@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        bottomNavigation.setSelectedItemId(R.id.navigation_home);
         openFragment(HomeFragment.newInstance("", ""));
     }
 
