@@ -13,16 +13,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_splash"
-            android:theme="@style/FullscreenTheme"></activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".SearchableActivityMap">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivityMap" />
+        </activity>
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="API KEY HERE" />
+            android:value="AIzaSyAB7zCFPOHSeQsJm1lgLEOyGJV95SWJ7uE" />
     </application>
 
 </manifest>
