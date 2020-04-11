@@ -20,7 +20,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_loading);
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         videoView = (VideoView)findViewById(R.id.videoView);
 
