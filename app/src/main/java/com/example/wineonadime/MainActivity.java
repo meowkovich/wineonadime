@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void continueAsGuest(View view) {
 
-        openFragment(HomeFragment.newInstance("", ""));
+        openFragment(MapFragment.newInstance("", ""));
     }
 
     public void register(View view) {
@@ -119,17 +119,15 @@ public class MainActivity extends AppCompatActivity {
             error_message.setTextColor(getResources().getColor(R.color.colorPrimary));
         }
         else {
-            
+            if (password.length() < 8) {
+
+            }
+            else{
+
+            }
+
         }
-
-
         openFragment(LoginFragment.newInstance("",""));
 
     }
-
-//    public void goToMap( View view )
-//    {
-//        Intent intent = new Intent( this, MapActivity.class );
-//        startActivity( intent );
-//    }
 }
