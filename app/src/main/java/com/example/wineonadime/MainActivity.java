@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchListener {
 
     BottomNavigationView bottomNavigation;
     SharedPreferences userLog;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.navigation_map:
                             openFragment(MapFragment.newInstance("", ""));
+                            //goToMap();
                             return true;
                         case R.id.navigation_search:
                             openFragment(SearchFragment.newInstance("", ""));
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
 
     public void signUp(View view) {
         openFragment(RegisterFragment.newInstance("",""));
@@ -128,6 +131,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
         openFragment(LoginFragment.newInstance("",""));
+    }
 
+    public void goToMap()
+    {
+        Intent intent = new Intent( this, MapActivity.class );
+        startActivity( intent );
+    }
+
+    @Override
+    public void openSearch( View view )
+    {
+        onSearchRequested();
+        Log.i("search", "onsearch called" );
     }
 }
