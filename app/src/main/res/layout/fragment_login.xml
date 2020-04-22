@@ -48,12 +48,12 @@
             app:layout_constraintVertical_bias="0.831">
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:hint="Username"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/colorPrimaryDark" />
 

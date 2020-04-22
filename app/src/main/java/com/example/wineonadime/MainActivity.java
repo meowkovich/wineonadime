@@ -1,39 +1,60 @@
 package com.example.wineonadime;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
     SharedPreferences userLog;
+    public FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userLog = getSharedPreferences("wineOnADimeLogin", Context.MODE_PRIVATE);
+     //   userLog = getSharedPreferences("wineOnADimeLogin", Context.MODE_PRIVATE);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         bottomNavigation.setSelectedItemId(R.id.navigation_home);
+        mAuth = FirebaseAuth.getInstance();
       //  hideBottomBar(false);
+        onStart();
+    }
 
-        openFragment(LoginFragment.newInstance("",""));
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null){
+            openFragment(LoginFragment.newInstance("",""));
+        }
+        else {
+            //TODO
+            openFragment(LoginFragment.newInstance("",""));
+            updateUI(currentUser);
+        }
     }
 
     public void hideBottomBar(boolean isHidden){
@@ -72,64 +93,90 @@ public class MainActivity extends AppCompatActivity {
             };
 
     public void signUp(View view) {
-        openFragment(RegisterFragment.newInstance("",""));
-
+        openFragment(RegisterFragment.newInstance());
     }
 
     public void login(View view) {
-        EditText username_text = findViewById(R.id.username);
+        EditText username_text = findViewById(R.id.email);
         EditText password_text = findViewById(R.id.password);
         TextView error_message = findViewById(R.id.loginInfoText);
 
-        String username = username_text.getText().toString();
+        String email = username_text.getText().toString();
         String password = password_text.getText().toString();
 
-        if(userLog.contains(username)) {
-            if(userLog.getString(username,"").equals(password)) {
-                openFragment(HomeFragment.newInstance("", ""));
-            }
-            else {
-                error_message.setText(getResources().getString(R.string.incorrectPassword));
-                error_message.setTextColor(getResources().getColor(R.color.colorPrimary));
-            }
-        }
-        else{
-            error_message.setText(getResources().getString(R.string.usernameDoesNotExist));
-            error_message.setTextColor(getResources().getColor(R.color.colorPrimary));
-        }
+        signInWithEmailAndPassword(email, password);
+
+    }
+
+    public void signInWithEmailAndPassword(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
     }
 
     public void continueAsGuest(View view) {
 
-        openFragment(HomeFragment.newInstance("", ""));
+      //  openFragment(HomeFragment.newInstance("", ""));
     }
 
     public void register(View view) {
-        EditText username_text = findViewById(R.id.username_register);
         EditText email_text = findViewById(R.id.email_register);
         EditText password_text = findViewById(R.id.password_register);
         TextView error_message = findViewById(R.id.registerInfoText);
 
-        String username = username_text.getText().toString();
         String email = email_text.getText().toString();
         String password = password_text.getText().toString();
 
-        if(userLog.contains(username)) {
-            error_message.setText(getResources().getString(R.string.usernameExists));
-            error_message.setTextColor(getResources().getColor(R.color.colorPrimary));
-        }
-        else {
-            
-        }
-
-
-        openFragment(LoginFragment.newInstance("",""));
-
+        createAccount(email, password);
     }
 
-//    public void goToMap( View view )
-//    {
-//        Intent intent = new Intent( this, MapActivity.class );
-//        startActivity( intent );
-//    }
+    public void createAccount(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void updateUI(FirebaseUser user) {
+        //TODO have some way to have the favorites and profile set
+        if (user == null) {
+            //there is no user
+            //openFragment(HomeFragment.newInstance("", ""));
+        }
+        else {
+            //there is some user
+          openFragment(HomeFragment.newInstance("", ""));
+        }
+    }
+
 }
