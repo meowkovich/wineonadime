@@ -1,0 +1,340 @@
+{
+  "stores": [
+    {
+      "store": {
+        "name": "Riley's Wines Of The World",
+        "latitude": 43.07697,
+        "longitude": -89.39362,
+        "address": {
+          "street": "402 W Gorham St",
+          "city": "Madison",
+          "state": "Wisconsin",
+          "country": "United States",
+          "zipcode": "53703"
+        },
+        "wines": [
+          {
+            "name": "Las Alturas Vineyard Pinot Noir",
+            "price": 36.99,
+            "type": "Red",
+            "brand": "Belle Glos",
+            "year": 2014,
+            "country": "United States"
+          },
+          {
+            "name": "Unoaked Chardonnay",
+            "price": 15.99,
+            "type": "White",
+            "brand": "Pellegrini",
+            "year": 2016,
+            "country": "United States"
+          },
+          {
+            "name": "La Serra Moscato d’Asti",
+            "price": 16.98,
+            "type": "Sparkling",
+            "brand": "Marchesi di Gresy",
+            "year": 2018,
+            "country": "Italy"
+          },
+          {
+            "name": "Rock Angel Rosé",
+            "price": 34.99,
+            "type": "Rosé",
+            "brand": "Château d’Esclans",
+            "year": 2018,
+            "country": "France"
+          },
+          {
+            "name": "Chardonnay",
+            "price": 38.35,
+            "type": "White",
+            "brand": "Rombauer Vineyards",
+            "year": 2015,
+            "country": "United States"
+          }
+        ]
+      }
+    },
+    {
+      "store": {
+        "name": "The Wine & Hop Shop",
+        "latitude": 43.06488,
+        "longitude": -89.417854,
+        "address": {
+          "street": "1919 Monroe St",
+          "city": "Madison",
+          "state": "Wisconsin",
+          "country": "United States",
+          "zipcode": "53711"
+        },
+        "wines": [
+          {
+            "name": "Truchard Vineyard Chardonnay",
+            "price": 39.95,
+            "type": "White",
+            "brand": "Nickel & Nickel",
+            "year": 2018,
+            "country": "United States"
+          },
+          {
+            "name": "Dairyman Vineyard Pinot Noir",
+            "price": 34.99,
+            "type": "Red",
+            "brand": "Belle Glos",
+            "year": 2018,
+            "country": "United States"
+          },
+          {
+            "name": "The Prisoner",
+            "price": 39.42,
+            "type": "Red",
+            "brand": "The Prisoner",
+            "year": 2018,
+            "country": "United States"
+          },
+          {
+            "name": "Whispering Angel Rosé",
+            "price": 18.95,
+            "type": "Rosé",
+            "brand": "Château d’Esclans",
+            "year": 2018,
+            "country": "France"
+          },
+          {
+            "name": "Fleur de Mer Rosé",
+            "price": 18.99,
+            "type": "Rosé",
+            "brand": "Les Maires Vignerons de la Presqu’ile de Saint-Tropez",
+            "year": 2018,
+            "country": "France"
+          }
+        ]
+      }
+    },
+    {
+      "store": {
+        "name": "Steve's Wine.Beer.Spirits",
+        "latitude": 43.07721,
+        "longitude": -89.44962,
+        "address": {
+          "street": "3618 University Ave",
+          "city": "Madison",
+          "state": "Wisconsin",
+          "country": "United States",
+          "zipcode": "53705"
+        },
+        "wines": [
+          {
+            "name": "Côtes de Provence Rosé",
+            "price": 17.99,
+            "type": "Rosé",
+            "brand": "Champs de Provence",
+            "year": 2017,
+            "country": "France"
+          },
+          {
+            "name": "Moscato d’Asti",
+            "price": 11.94,
+            "type": "Sparkling",
+            "brand": "Stella Rosa",
+            "year": 2018,
+            "country": "Italy"
+          },
+          {
+            "name": "Bramare Malbec Uno Valley",
+            "price": 38.85,
+            "type": "Red",
+            "brand": "Viña Cobos",
+            "year": 2017,
+            "country": "Argentina"
+          },
+          {
+            "name": "Tinto",
+            "price": 40,
+            "type": "Red",
+            "brand": "Pago de Carraovejas",
+            "year": 2016,
+            "country": "Spain"
+          },
+          {
+            "name": "Regional Reserve Sauvignon Blanc",
+            "price": 16.99,
+            "type": "White",
+            "brand": "Glazebrook",
+            "year": 2019,
+            "country": "New Zealand"
+          }
+        ]
+      }
+    },
+    {
+      "store": {
+        "name": "Vino Third Ward - Wine Bar & Store",
+        "latitude": 43.045593,
+        "longitude": -87.91113,
+        "address": {
+          "street": "219 E Erie St",
+          "city": "Milwaukee",
+          "state": "Wisconsin",
+          "country": "United States",
+          "zipcode": "53202"
+        },
+        "wines": [
+          {
+            "name": "Cabernet Franc",
+            "price": 23.99,
+            "type": "Red",
+            "brand": "El Enemigo",
+            "year": 2016,
+            "country": "Argentina"
+          },
+          {
+            "name": "Chardonnay",
+            "price": 30,
+            "type": "White",
+            "brand": "Lismore",
+            "year": 2017,
+            "country": "South Africa"
+          },
+          {
+            "name": "The Original Rosé",
+            "price": 10,
+            "type": "Rosé",
+            "brand": "Mateus",
+            "year": 2018,
+            "country": "Portugal"
+          },
+          {
+            "name": "Sparkling Shiraz",
+            "price": 29.99,
+            "type": "Sparkling",
+            "brand": "Schild Estate",
+            "year": 2014,
+            "country": "Australia"
+          },
+          {
+            "name": "Cabarnet Sauvignon",
+            "price": 39.99,
+            "type": "Red",
+            "brand": "Terrunyo",
+            "year": 2015,
+            "country": "Chile"
+          }
+        ]
+      }
+    },
+    {
+      "store": {
+        "name": "Otto's Wine & Spirits on Oakland",
+        "latitude": 43.095253,
+        "longitude": -87.88641,
+        "address": {
+          "street": "3476 N Oakland Ave",
+          "city": "Shorewood",
+          "state": "Wisconsin",
+          "country": "United States",
+          "zipcode": "53211"
+        },
+        "wines": [
+          {
+            "name": "Cuvée Tradition Brut Rosé",
+            "price": 15.75,
+            "type": "Sparkling",
+            "brand": "Miolo",
+            "year": 2012,
+            "country": "Brazil"
+          },
+          {
+            "name": "Malagouzia Turtles Vineyard",
+            "price": 20.99,
+            "type": "White",
+            "brand": "Alpha Estate",
+            "year": 2018,
+            "country": "Greece"
+          },
+          {
+            "name": "Cabernet Franc",
+            "price": 23.99,
+            "type": "Red",
+            "brand": "El Enemigo",
+            "year": 2016,
+            "country": "Argentina"
+          },
+          {
+            "name": "Pinot Noir Rosé Trocken",
+            "price": 18,
+            "type": "Rosé",
+            "brand": "Seehof",
+            "year": 2017,
+            "country": "Germany"
+          },
+          {
+            "name": "Gala Sec",
+            "price": 11.99,
+            "type": "Sparkling",
+            "brand": "Törley",
+            "year": 2013,
+            "country": "Hungary"
+          }
+        ]
+      }
+    },
+    {
+      "store": {
+        "name": "Total Wine & More",
+        "latitude": 42.97329,
+        "longitude": -88.02649,
+        "address": {
+          "street": "8700 W Sura Ln",
+          "city": "Greenfield",
+          "state": "Wisconsin",
+          "country": "United States",
+          "zipcode": "53228"
+        },
+        "wines": [
+          {
+            "name": "Dairyman Vineyard Pinot Noir",
+            "price": 31.99,
+            "type": "Red",
+            "brand": "Belle Glos",
+            "year": 2018,
+            "country": "United States"
+          },
+          {
+            "name": "Ellen Lane Estate Chardonnay",
+            "price": 84.99,
+            "type": "White",
+            "brand": "Paul Hobbs",
+            "year": 2015,
+            "country": "United States"
+          },
+          {
+            "name": "The FMC Chenin Blanc",
+            "price": 62.99,
+            "type": "White",
+            "brand": "Ken Forrester",
+            "year": 2016,
+            "country": "South Africa"
+          },
+          {
+            "name": "Château de Selle Rosé",
+            "price": 49.95,
+            "type": "Rosé",
+            "brand": "Domaines Ott",
+            "year": 2018,
+            "country": "France"
+          },
+          {
+            "name": "Brut Rosé Champagne",
+            "price": 79.95,
+            "type": "Sparkling",
+            "brand": "Billecart-Salmon",
+            "year": 2015,
+            "country": "France"
+          }
+        ]
+      }
+    }
+  ]
+}

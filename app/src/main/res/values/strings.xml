@@ -11,6 +11,7 @@
     <string name="login_button_text">Login</string>
     <string name="signup_button_text">Sign-Up</string>
     <string name="continue_guest_button_text">Contine As Guest</string>
+    <string name="search_hint">Search</string>
     <string name="home_appTitle">Wine on a Dime</string>
     <string name="usernameDoesNotExist">"That username does not exist, please register to continue. "</string>
     <string name="incorrectPassword">Password is incorrect, please try again or \'Continue as Guest\'.</string>

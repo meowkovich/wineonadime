@@ -30,7 +30,7 @@ public class MapActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.frame_map);
         mapFragment.getMapAsync(googleMap -> {
             mMap = googleMap;
             displayMyLocation( googleMap );
@@ -38,6 +38,7 @@ public class MapActivity extends FragmentActivity {
 
         //Obtain a FusedLocationProviderClient
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        onSearchRequested();
     }
 
     private void displayMyLocation( GoogleMap googleMap )

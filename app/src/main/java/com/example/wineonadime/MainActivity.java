@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchListener {
 
     BottomNavigationView bottomNavigation;
     SharedPreferences userLog;
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.navigation_map:
                             openFragment(MapFragment.newInstance("", ""));
+                            //goToMap();
                             return true;
                         case R.id.navigation_search:
                             openFragment(SearchFragment.newInstance("", ""));
@@ -91,6 +92,19 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    public void goToMap()
+    {
+        Intent intent = new Intent( this, MapActivity.class );
+        startActivity( intent );
+    }
+
+    @Override
+    public void openSearch( View view )
+    {
+        onSearchRequested();
+        Log.i("search", "onsearch called" );
+    }
 
     public void signUp(View view) {
         openFragment(RegisterFragment.newInstance());
@@ -178,5 +192,4 @@ public class MainActivity extends AppCompatActivity {
           openFragment(HomeFragment.newInstance("", ""));
         }
     }
-
 }
