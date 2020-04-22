@@ -15,6 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -156,6 +165,16 @@ public class MapFragment extends Fragment
 //                    googleMap.addMarker( new MarkerOptions().position(mCurrentLatLng).title("Current Location") );
                     googleMap.moveCamera( CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, DEFAULT_ZOOM_LEVEL) );
                     googleMap.setMyLocationEnabled(true); // for the blue dot on map
+
+                    //add markers from JSON file
+                    ArrayList<Store> storeArrayList = readStoresFromJSON();
+                    for( int i = 0; i < storeArrayList.size(); i++ )
+                    {
+                        LatLng storeLocation = new LatLng(  storeArrayList.get(i).getLatitude(),
+                                storeArrayList.get(i).getLongitude() );
+                        googleMap.addMarker( new MarkerOptions().position(storeLocation)
+                                .title(storeArrayList.get(i).getName()) );
+                    }
                 }
             });
         }
@@ -172,5 +191,61 @@ public class MapFragment extends Fragment
                 displayMyLocation( mMap );
             }
         }
+    }
+
+    public ArrayList<Store> readStoresFromJSON()
+    {
+        ArrayList<Store> arrayOfStores = new ArrayList<>();
+        try
+        {
+            Log.i( "jsondata", "read stores called" );
+            //Read JSON file
+            JSONObject jsonObject = new JSONObject( loadJSONStoreFile() );
+            //Get all stores
+            JSONArray storeArray = jsonObject.getJSONArray( "stores" );
+            
+            for( int i = 0; i < storeArray.length(); i++ )
+            {
+                //Read each parameter for creating a new store
+                JSONObject iStore = storeArray.getJSONObject( i ).getJSONObject( "store" );
+                String storeName = iStore.getString( "name" );
+                double latitude = iStore.getDouble( "latitude" );
+                double longitude = iStore.getDouble( "longitude" );
+                Store newStore = new Store( storeName, latitude, longitude, null, null );
+
+                //add store to arraylist
+                arrayOfStores.add( newStore );
+            }
+        }
+        catch( JSONException e )
+        {
+            e.printStackTrace();
+            Log.i( "jsondata", "read stores error" );
+            return null;
+        }
+
+        return arrayOfStores;
+    }
+
+    public String loadJSONStoreFile()
+    {
+        String json;
+
+        try
+        {
+            InputStream inputStream = getActivity().getAssets().open( "derulo.json" );
+            int bufferSize = inputStream.available();
+            byte[] buffer = new byte[bufferSize];
+            inputStream.read( buffer );
+            inputStream.close();
+            json = new String( buffer, "UTF-8" );
+        }
+        catch ( IOException e )
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+        return json;
     }
 }
