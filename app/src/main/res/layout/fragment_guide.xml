@@ -1,14 +1,430 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GuideFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:src="@drawable/icons8_user_manual_100"
-        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:id="@+id/lin_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/wine101"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Wine 101"
+                    android:textColor="#630000"
+                    android:textSize="72sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/abhaya_libre"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/guide"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:freezesText="false"
+                    android:gravity="center_horizontal"
+                    android:text="A Beginner's Guide to Wine"
+                    android:textColor="#050000"
+                    android:textSize="30sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/abhaya_libre"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.143" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#3E050000" />
+
+                <TextView
+                    android:id="@+id/wine_basics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Wine Basics"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/wine_basics_par1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Most wine is made with grapes, but they're not like the ones you find in the grocery store. Wine grapes are smaller, sweeter, have thick skins, and contain seeds. There are over 1,300 wine grape varieties used in commercial production but only about 100 of these varieties make up 75% of the world's vineyards."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/wine_basics_par2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text='Today, the most planted wine grape in the world is Cabernet Sauvignon ("cab-err-nay saw-vin-yon"). Find out more about the basics of wine (and which ones to try) in the following sections.'
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <ImageView
+                    android:id="@+id/grapes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/grapes" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#3E050000" />
+
+                <TextView
+                    android:id="@+id/develop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Develop Your Sense of Taste"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/look"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Look"
+                    android:textSize="24sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/look_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Your eyes will help you size up a wine before you even sniff it. Here’s what to do:"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/hue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="1. Hue and Intensity: Identify the wine’s most prominent color as a point of reference."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/tears"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="2. Tears/Legs: When you swirl the wine, you will see tears develop on the sides of the glass. It is is a phenomenon called the Gibbs-Marangoni Effect and it indicates the presence of alcohol in the wine. Increased tearing is an indication of a higher alcohol level."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/smell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Smell"
+                    android:textSize="24sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/smell_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="There are hundreds of aroma compounds found in wine. As we learn to smell wine, we become more adept at isolating and identifying these aromas. Try to identify the smells to get a clear impression of the wine before you taste it."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/intensity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="1. Intensity: Position the glass just below your nose and take a quick, light whiff to judge the intensity. If the wine is highly aromatic, you will be able to smell it quite distinctly. Now position the glass where it’s most optimal for you to smell individual aromas (usually by pulling it back a bit)"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/fruit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="2. Fruit: If you’re having trouble identifying aromas besides a strong “vinous” note, try holding the glass farther away from your nose. Identify the type of fruit and also the condition of the fruit. For example, if you detect strawberry, ask yourself: is it fresh, ripe, or dried? A good goal to set is to attempt to identify 3 fruit aromas before moving on to other smells."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/herb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="3. Herb/Other: Note all the other aromas you smell in a wine that are not related to fruit. You’ll notice that some wines are distinctly more savory and have notes of herbs, flowers, and even minerals. By the way, no answer is wrong, notes in this category can include things like black pepper, espresso, balsamic, petroleum, and beeswax."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/oak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="4. Oak: If the wine has aromas of vanilla, coconut, allspice, chocolate, cola, and cedar or cigar, it’s likely to have been aged in oak barrels. Aging wine in oak causes some flavor compounds from the barrel to transfer into the wine. Different species of oak trees affect flavors differently. For example, American oak (Quercus alba) tends to add more dill and coconut aromas whereas, European oak (Quercus petrea) tends to contribute aromas of vanilla, nutmeg, and allspice."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/earth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="5. Earth: When you taste earthiness in a wine, note whether it tastes organic (loam, forest soil, mushroom) or inorganic (slate, chalk, rocks, dried clay). These aromas, while still unexplained scientifically, offer more clues to where the grapes were grown. For example, wines from Burgundy and Champagne often have subtle, organic, mushroom aromas. A lack of earthy aromas also helps to identify (or narrow down) a wine’s potential origin."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/taste"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Taste"
+                    android:textSize="24sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/taste_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="When you taste a wine, you’ll focus on flavors and feel (how the wine feels on your palate/ in your mouth). Make sure you swish it around in your mouth to get the full effect before swallowing."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/sweetness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="1. Sweetness: Sweetness in wine is primarily from grape sugars that are leftover after fermentation, which are referred to as residual sugar (RS). Of course, our human perception of residual sugar in wine is influenced by the other characteristics in the wine, particularly acidity. Sweetness is less perceivable in wines with higher acidity."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/tannin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="2. Tannin: (for red wines) Tannin is a polyphenol (antioxidant) found mostly in red wine. Tannin tastes astringent and gives a drying sensation felt on your tongue. High tannin wines will grip the insides of your lips to your teeth. Tannins can taste bitter, but mostly, they are astringent and can be described like sandpaper: fine, medium, gritty, or grippy."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/acidity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="3. Acidity: Acidity is the level of sourness in wine. Acidity makes your mouth water. Low acid wines generally taste round or even flabby and high acid wines taste lighter in body and very tart. Understand how acidic wine is compared to over beverages."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/alcohol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="4. Alcohol: Alcohol is felt in your throat as a warming sensation. With practice, some tasters can estimate the alcohol level within a 10th of a percent. Alcohol adds to the overall body of wine."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/overall_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="5. Overall Body: All the traits mentioned above come together to give you a sense of the wine’s body, which is essentially a measure of how bold it tastes in your mouth. Ask yourself if the wine is light-, medium-, or full-bodied."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/conclusion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Conclusion"
+                    android:textSize="24sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/conclusion_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="After you’ve tasted the wine, now you have the opportunity to consider the wine’s quality. Here are some of the questions to ask yourself:"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="1. Is the wine in balance? This is a question referencing the notes you made in the tasting section. Wines that are “in balance” have tastes that are balanced between one-another including acidity, tannin (if it’s a red), and alcohol level. While different wines have different intensities, a quality wine will be in balance with itself."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/complex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="2. Is the wine complex? If you have a great deal of tasting notes for this wine and can still think of more, you’ve got a pretty complex wine on your hands."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/opinion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="3. What is your opinion? Now that you’ve properly assessed the wine, what do you think of it (overall)? We use a very simple 3-point system for this assessment (ew, meh, yay!) but you can use any kind of rating system that works for you."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#3E050000" />
+
+                <TextView
+                    android:id="@+id/open"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="How to Open a Bottle of Wine"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/cut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="1. Cut the foil below lower lip."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/insert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="2. Insert the screw in the center of the cork."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/rotate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="3. Rotate corkscrew 6 half turns."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/lever"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="4. Lever cork out slowly."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/wipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="5. Wipe off any tartrate crystals or sediment with a napkin."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#3E050000" />
+
+                <TextView
+                    android:id="@+id/buying"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Buying Wine"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#3E050000" />
+
+                <TextView
+                    android:id="@+id/expert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="How to Become a Wine Expert"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#3E050000" />
+
+                <TextView
+                    android:id="@+id/why"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Why Learn About Wine"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/abhaya_libre" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

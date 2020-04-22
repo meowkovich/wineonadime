@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "816007305722",
+    "firebase_url": "https://wineonadime-b1552.firebaseio.com",
+    "project_id": "wineonadime-b1552",
+    "storage_bucket": "wineonadime-b1552.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816007305722:android:c5d956fe061b00f3f7ec43",
+        "android_client_info": {
+          "package_name": "com.example.wineonadime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "816007305722-hitt1f0p8rpi4k0s4iju1fj8a2r14h9m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wineonadime",
+            "certificate_hash": "a0168f170f88c7b01b8daba836fa845a9ed57bec"
+          }
+        },
+        {
+          "client_id": "816007305722-87h5d9f7g66rbvd49sl65do8fs747joh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlZoyTDGW0UjCS6OjKY0-56s_7R__mcjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "816007305722-87h5d9f7g66rbvd49sl65do8fs747joh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
