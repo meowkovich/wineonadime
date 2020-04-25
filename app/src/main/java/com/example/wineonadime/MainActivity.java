@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         bottomNavigation.setSelectedItemId(R.id.navigation_home);
         mAuth = FirebaseAuth.getInstance();
-      //  hideBottomBar(false);
+        hideBottomBar(false);
         onStart();
     }
 
