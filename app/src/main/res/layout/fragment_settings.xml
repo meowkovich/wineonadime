@@ -35,6 +35,7 @@
             android:fontFamily="@font/abhaya_libre"
             android:padding="30dp"
             android:text="Edit Name"
+            android:onClick="editName"
             android:textAllCaps="true"
             android:textSize="25sp" />
 
@@ -49,6 +50,7 @@
             android:fontFamily="@font/abhaya_libre"
             android:padding="30dp"
             android:text="Change Password"
+            android:onClick="changePassword"
             android:textAllCaps="true"
             android:textSize="25sp" />
 
