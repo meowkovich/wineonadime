@@ -1,17 +1,28 @@
 package com.example.wineonadime;
 
 import androidx.annotation.NonNull;
+import android.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
     BottomNavigationView bottomNavigation;
     SharedPreferences userLog;
     public FirebaseAuth mAuth;
+    private String newFirst = "";
+    private String newLast = "";
+    private String newPassword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,4 +218,84 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         Toast.makeText(this, "Successfully logged out.",
                 Toast.LENGTH_LONG).show();
     }
+
+    //Test
+    public void editName(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("                 Edit Name");
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText inputFirst = new EditText(this);
+        inputFirst.setHint("First Name");
+        inputFirst.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        inputFirst.setSingleLine();
+        inputFirst.setPadding(70, 50, 80, 40);
+        layout.addView(inputFirst);
+
+        final EditText inputLast = new EditText(this);
+        inputLast.setHint("Last Name");
+        inputLast.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        inputLast.setSingleLine();
+        inputLast.setPadding(70, 20, 80, 40);
+        layout.addView(inputLast);
+
+        builder.setView(layout);
+
+        // Set up the buttons
+        builder.setPositiveButton("Save", (dialog, which) -> {
+            newFirst = inputFirst.getText().toString();
+            newLast = inputLast.getText().toString();
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    public void changePassword(View view) {
+        // Create "pop up"
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("          Change Password");
+
+        // To include multiple things in the alert dialog
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        // Input Password
+        final EditText input = new EditText(this);
+        input.setHint("New Password");
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        input.setSingleLine();
+        input.setPadding(70, 50, 80, 40);
+        input.setTransformationMethod(new PasswordTransformationMethod());
+        layout.addView(input);
+
+        // Show/Hide Password
+        final AppCompatCheckBox show = new AppCompatCheckBox(this);
+        show.setText("Show Password");
+        layout.addView(show);
+
+        // Control visibility
+        show.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (!isChecked) {
+                // show password
+                input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            } else {
+                // hide password
+                input.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+        });
+
+        builder.setView(layout);
+
+        // Set up the buttons
+        builder.setPositiveButton("Save", (dialog, which) -> {
+            newPassword = input.getText().toString();
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
 }
