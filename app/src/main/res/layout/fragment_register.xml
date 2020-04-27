@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:hint="EmailAddress"
+                android:hint="Email Address"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/colorPrimaryDark" />
 

@@ -193,4 +193,15 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
           openFragment(HomeFragment.newInstance("", ""));
         }
     }
+
+    public void openSettings(View view) {
+        openFragment(SettingsFragment.newInstance());
+    }
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        openFragment(LoginFragment.newInstance());
+        Toast.makeText(this, "Successfully logged out.",
+                Toast.LENGTH_LONG).show();
+    }
 }
