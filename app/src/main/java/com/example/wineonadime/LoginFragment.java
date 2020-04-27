@@ -47,6 +47,14 @@ public class LoginFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * This method sets up the Register Fragment
+     */
+    public static LoginFragment newInstance() {
+        LoginFragment fragment = new LoginFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
