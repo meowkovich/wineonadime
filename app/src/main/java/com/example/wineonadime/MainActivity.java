@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-     //   userLog = getSharedPreferences("wineOnADimeLogin", Context.MODE_PRIVATE);
+        //   userLog = getSharedPreferences("wineOnADimeLogin", Context.MODE_PRIVATE);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         bottomNavigation.setSelectedItemId(R.id.navigation_home);
@@ -62,17 +62,16 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null){
-            openFragment(LoginFragment.newInstance("",""));
-        }
-        else {
+        if (currentUser == null) {
+            openFragment(LoginFragment.newInstance("", ""));
+        } else {
             //TODO
-            openFragment(LoginFragment.newInstance("",""));
+            openFragment(LoginFragment.newInstance("", ""));
             updateUI(currentUser);
         }
     }
 
-    public void hideBottomBar(boolean isHidden){
+    public void hideBottomBar(boolean isHidden) {
         bottomNavigation.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
@@ -85,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
                             openFragment(HomeFragment.newInstance("", ""));
@@ -108,17 +108,15 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                 }
             };
 
-    public void goToMap()
-    {
-        Intent intent = new Intent( this, MapActivity.class );
-        startActivity( intent );
+    public void goToMap() {
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
     }
 
     @Override
-    public void openSearch( View view )
-    {
+    public void openSearch(View view) {
         onSearchRequested();
-        Log.i("search", "onsearch called" );
+        Log.i("search", "onsearch called");
     }
 
     public void signUp(View view) {
@@ -162,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
 
     public void continueAsGuest(View view) {
 
-      //  openFragment(HomeFragment.newInstance("", ""));
+        //  openFragment(HomeFragment.newInstance("", ""));
     }
 
     public void register(View view) {
@@ -201,10 +199,9 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         if (user == null) {
             //there is no user
             //openFragment(HomeFragment.newInstance("", ""));
-        }
-        else {
+        } else {
             //there is some user
-          openFragment(HomeFragment.newInstance("", ""));
+            openFragment(HomeFragment.newInstance("", ""));
         }
     }
 

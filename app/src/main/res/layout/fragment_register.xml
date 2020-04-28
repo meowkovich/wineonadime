@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".RegisterFragment">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -74,9 +74,9 @@
                 android:layout_margin="5dp"
                 android:background="@color/colorPrimaryDark"
                 android:padding="12dp"
-                android:onClick="register"
                 android:text="@string/signup_button_text"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:onClick="register"/>
 
             <TextView
                 android:id="@+id/registerInfoText"

@@ -39,7 +39,6 @@ public class RegisterFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null)
             activity.hideBottomBar(true);
-
         return view;
     }
 
