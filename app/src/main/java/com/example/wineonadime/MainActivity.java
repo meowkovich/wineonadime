@@ -1,43 +1,52 @@
 package com.example.wineonadime;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
+import android.Manifest;
 import android.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import static androidx.constraintlayout.widget.Constraints.TAG;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 
 public class MainActivity extends AppCompatActivity implements SearchListener {
 
     BottomNavigationView bottomNavigation;
+    private FirebaseFirestore mFirestore;
     SharedPreferences userLog;
     public FirebaseAuth mAuth;
     private String newFirst = "";
@@ -46,13 +55,18 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MultiDex.install(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //   userLog = getSharedPreferences("wineOnADimeLogin", Context.MODE_PRIVATE);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         bottomNavigation.setSelectedItemId(R.id.navigation_home);
+        //set up firebase
+        mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+
         hideBottomBar(false);
         onStart();
     }
@@ -80,6 +94,26 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+
+    public void openFragment2(View view) {
+        switch (view.getId()) {
+            case R.id.guide_button:
+                openFragment(GuideFragment.newInstance("", ""));
+                break;
+            case R.id.map_button:
+                openFragment(MapFragment.newInstance("", ""));
+                //goToMap();
+                break;
+            case R.id.search_wines_button:
+                openFragment(SearchFragment.newInstance("", ""));
+                break;
+            case R.id.profile_button:
+                openFragment(ProfileFragment.newInstance("", ""));
+                break;
+        }
+
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -158,15 +192,12 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                 });
     }
 
-    public void continueAsGuest(View view) {
-
-        //  openFragment(HomeFragment.newInstance("", ""));
-    }
-
     public void register(View view) {
         EditText email_text = findViewById(R.id.email_register);
         EditText password_text = findViewById(R.id.password_register);
         TextView error_message = findViewById(R.id.registerInfoText);
+        EditText firstname = findViewById(R.id.firstname_register);
+        EditText lastname = findViewById(R.id.lastname_register);
 
         String email = email_text.getText().toString();
         String password = password_text.getText().toString();
@@ -293,6 +324,31 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
         builder.show();
+    }
+
+    public void search(View view) {
+        mFirestore.collection("stores-collection")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //TODO delete later
+                            Toast.makeText(MainActivity.this, "Collection received.",
+                                    Toast.LENGTH_SHORT).show();
+                            //
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            //TODO delete later
+                            Toast.makeText(MainActivity.this, "Failed to get collection.",
+                                    Toast.LENGTH_SHORT).show();
+                            //
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 
 }

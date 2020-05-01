@@ -20,7 +20,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapActivity extends FragmentActivity {
 
-    private final LatLng mDestinationLatLng = new LatLng(  43.075385, -89.404179 );
+    //TODO delete? private final LatLng mDestinationLatLng = new LatLng(  43.075385, -89.404179 );
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient; // Save the instance
 
@@ -58,7 +58,7 @@ public class MapActivity extends FragmentActivity {
                 Location mLastKnownLocation = task.getResult();
                 if( task.isSuccessful() && mLastKnownLocation != null )
                 {
-                    //Add marker for milestone 2 deliverables
+                    //Add marker
                     LatLng mCurrentLatLng = new LatLng(  mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude() );
                     googleMap.addMarker( new MarkerOptions().position(mCurrentLatLng).title("Current Location") );
                 }

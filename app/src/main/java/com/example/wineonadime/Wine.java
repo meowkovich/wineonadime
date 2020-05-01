@@ -4,14 +4,14 @@ public class Wine
 {
     //Class variables
     private String name;
-    private String price;
+    private Double price;
     private String type;
     private String brand;
     private String year;
     private String country;
 
     //Constructor
-    public Wine(String name, String price, String type, String brand, String year,
+    public Wine(String name, Double price, String type, String brand, String year,
                      String country )
     {
         this.name    = name;
@@ -28,7 +28,7 @@ public class Wine
         this.name = name;
     }
 
-    public void setPrice( String price )
+    public void setPrice( Double price )
     {
         this.price = price;
     }
@@ -59,7 +59,7 @@ public class Wine
         return this.name;
     }
 
-    public String getPrice()
+    public Double getPrice()
     {
         return this.price;
     }
