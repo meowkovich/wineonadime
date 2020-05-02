@@ -43,4 +43,5 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     //firebase SDK
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.github.imperiumlabs:GeoFirestore-Android:v1.5.0'
 }
