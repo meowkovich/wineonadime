@@ -1,4 +1,4 @@
-package com.example.wineonadime;
+package com.supportingclasses;
 
 public class Wine
 {

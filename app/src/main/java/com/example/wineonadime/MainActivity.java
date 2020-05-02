@@ -3,7 +3,7 @@ package com.example.wineonadime;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,6 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -21,18 +20,20 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bottomnavigationview.fragments.GuideFragment;
+import com.bottomnavigationview.fragments.HomeFragment;
+import com.bottomnavigationview.fragments.MapFragment;
+import com.bottomnavigationview.fragments.ProfileFragment;
+import com.bottomnavigationview.fragments.SearchFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,16 +46,18 @@ import static java.util.jar.Pack200.Packer.ERROR;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.popupviews.LoginFragment;
+import com.popupviews.RegisterFragment;
+import com.popupviews.SettingsFragment;
+import com.supportingclasses.Wine;
 
 import org.imperiumlabs.geofirestore.GeoFirestore;
 import org.imperiumlabs.geofirestore.GeoQuery;
 import org.imperiumlabs.geofirestore.listeners.GeoQueryEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 
 public class MainActivity extends AppCompatActivity implements SearchListener {

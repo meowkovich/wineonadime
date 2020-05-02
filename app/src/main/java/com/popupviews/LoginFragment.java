@@ -1,6 +1,5 @@
-package com.example.wineonadime;
+package com.popupviews;
 
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,16 +7,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.MediaController;
-import android.widget.ScrollView;
-import android.widget.VideoView;
+
+import com.example.wineonadime.MainActivity;
+import com.example.wineonadime.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link GuideFragment#newInstance} factory method to
+ * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GuideFragment extends Fragment {
+public class LoginFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,7 +27,7 @@ public class GuideFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public GuideFragment() {
+    public LoginFragment() {
         // Required empty public constructor
     }
 
@@ -37,15 +37,23 @@ public class GuideFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GuideFragment.
+     * @return A new instance of fragment LoginFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GuideFragment newInstance(String param1, String param2) {
-        GuideFragment fragment = new GuideFragment();
+    public static LoginFragment newInstance(String param1, String param2) {
+        LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        return fragment;
+    }
+
+    /**
+     * This method sets up the Register Fragment
+     */
+    public static LoginFragment newInstance() {
+        LoginFragment fragment = new LoginFragment();
         return fragment;
     }
 
@@ -61,7 +69,23 @@ public class GuideFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_guide, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null)
+            activity.hideBottomBar(true);
+
+        return view;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null)
+            activity.hideBottomBar(false);    // to show the bottom bar when
+        // we destroy this fragment
     }
 }
