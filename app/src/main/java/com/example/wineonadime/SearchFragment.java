@@ -1,12 +1,29 @@
 package com.example.wineonadime;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +39,7 @@ public class SearchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ArrayList<Wine> wines;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -48,10 +66,25 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+//        //setup wines arraylist
+//        ArrayList<String> displayNotes = new ArrayList<>();
+//        for (Wine wine: wines) {
+//            displayNotes.add(String.format("Wine:%s\nCheapest Price: $%d\nStore:", wine.getName(), wine.getPrice(), wine.getStore()));
+//        }
+//
+//        //Use listview to display notes on the screen
+//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, displayNotes);
+//        ListView listView = findViewById(R.id.searchRecycle);
+//        listView.setAdapter(adapter);
+//
+//        //Add onItemClickListener for ListView item
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
     }
 
     @Override

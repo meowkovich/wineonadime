@@ -19,6 +19,8 @@ import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -38,9 +40,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import static androidx.constraintlayout.widget.Constraints.TAG;
+
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Collection;
 
 
 public class MainActivity extends AppCompatActivity implements SearchListener {
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
     private String newFirst = "";
     private String newLast = "";
     private String newPassword = "";
+    private boolean hideMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         //set up firebase
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        hideMenu = true;
+
 
 
         hideBottomBar(false);
@@ -89,6 +98,18 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         bottomNavigation.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        if(hideMenu) {
+            return false;
+        }
+        else {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.search_options, menu);
+            return true;
+        }
+    }
+
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
@@ -100,16 +121,20 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
     public void openFragment2(View view) {
         switch (view.getId()) {
             case R.id.guide_button:
+                hideMenu = true;
                 openFragment(GuideFragment.newInstance("", ""));
                 break;
             case R.id.map_button:
+                hideMenu = true;
                 openFragment(MapFragment.newInstance("", ""));
                 //goToMap();
                 break;
             case R.id.search_wines_button:
+                hideMenu = false;
                 openFragment(SearchFragment.newInstance("", ""));
                 break;
             case R.id.profile_button:
+                hideMenu = true;
                 openFragment(ProfileFragment.newInstance("", ""));
                 break;
         }
@@ -117,29 +142,31 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.navigation_home:
-                            openFragment(HomeFragment.newInstance("", ""));
-                            return true;
-                        case R.id.navigation_guide:
-                            openFragment(GuideFragment.newInstance("", ""));
-                            return true;
-                        case R.id.navigation_map:
-                            openFragment(MapFragment.newInstance("", ""));
-                            //goToMap();
-                            return true;
-                        case R.id.navigation_search:
-                            openFragment(SearchFragment.newInstance("", ""));
-                            return true;
-                        case R.id.navigation_profile:
-                            openFragment(ProfileFragment.newInstance("", ""));
-                            return true;
-                    }
-                    return false;
+            item -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        hideMenu = true;
+                        openFragment(HomeFragment.newInstance("", ""));
+                        return true;
+                    case R.id.navigation_guide:
+                        hideMenu = true;
+                        openFragment(GuideFragment.newInstance("", ""));
+                        return true;
+                    case R.id.navigation_map:
+                        hideMenu = true;
+                        openFragment(MapFragment.newInstance("", ""));
+                        //goToMap();
+                        return true;
+                    case R.id.navigation_search:
+                        hideMenu = false;
+                        openFragment(SearchFragment.newInstance("", ""));
+                        return true;
+                    case R.id.navigation_profile:
+                        hideMenu = true;
+                        openFragment(ProfileFragment.newInstance("", ""));
+                        return true;
                 }
+                return false;
             };
 
     public void goToMap() {
@@ -166,7 +193,6 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         String password = password_text.getText().toString();
 
         signInWithEmailAndPassword(email, password);
-
     }
 
     public void signInWithEmailAndPassword(String email, String password) {
@@ -322,13 +348,36 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
             newPassword = input.getText().toString();
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-
         builder.show();
     }
 
     public void search(View view) {
-        mFirestore.collection("stores-collection")
-                .get()
+
+        CollectionReference stores = mFirestore.collection("wines-collection");
+        CollectionReference wines = mFirestore.collection("stores-collection");
+                wines.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //TODO delete later
+                            Toast.makeText(MainActivity.this, "Collection received.",
+                                    Toast.LENGTH_SHORT).show();
+                            //
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            //TODO delete later
+                            Toast.makeText(MainActivity.this, "Failed to get collection.",
+                                    Toast.LENGTH_SHORT).show();
+                            //
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
+                stores.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -350,5 +399,4 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                     }
                 });
     }
-
 }

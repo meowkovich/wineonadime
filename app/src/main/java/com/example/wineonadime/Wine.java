@@ -9,6 +9,9 @@ public class Wine
     private String brand;
     private String year;
     private String country;
+    private String store;
+    private Double storeID;
+    private Double wineSKU;
 
     //Constructor
     public Wine(String name, Double price, String type, String brand, String year,
@@ -53,6 +56,12 @@ public class Wine
         this.country = country;
     }
 
+    public void setStore(String store) {this.store = store;}
+
+    public void setStoreID(Double storeID) {this.storeID = storeID;}
+
+    public void setWineSKU(Double wineSKU) {this.wineSKU = wineSKU;}
+
     //Getters
     public String getName()
     {
@@ -83,4 +92,10 @@ public class Wine
     {
         return this.country;
     }
+
+    public String getStore() {return this.store;}
+
+    public Double getStoreID() {return this.storeID;}
+
+    public Double getWineSKU() {return this.wineSKU;}
 }
