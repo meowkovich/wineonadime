@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,9 @@ public class SearchFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static SearchFragment newInstance(ArrayList<String> paramDisplay) {
-        displayWines = paramDisplay;
+        displayWines = new ArrayList<String>();
+        displayWines.add("String 1");
+        displayWines.add("String 2");
         SearchFragment fragment = new SearchFragment();
 
         return fragment;
@@ -79,10 +82,10 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
-        recyclerView = (RecyclerView) this.getView().findViewById(R.id.searchRecycle);
+        recyclerView = new RecyclerView(getContext());
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(view.getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         mAdapter = new WineAdapter(displayWines);

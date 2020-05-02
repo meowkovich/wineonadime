@@ -18,9 +18,9 @@ public class WineAdapter extends RecyclerView.Adapter<WineAdapter.WineNote> {
     public static class WineNote extends RecyclerView.ViewHolder {
 
         public TextView textView;
-        public WineNote(TextView v) {
-            super(v);
-            textView = v;
+        public WineNote(View itemView) {
+            super(itemView);
+            textView = (TextView) itemView;
         }
     }
 
@@ -32,7 +32,7 @@ public class WineAdapter extends RecyclerView.Adapter<WineAdapter.WineNote> {
     @Override
     public WineAdapter.WineNote onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = (TextView) new TextView(parent.getContext());
-        //TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.wine_text_view, parent, false);
+        WineAdapter.WineNote holder = new WineAdapter.WineNote(view);
 
         WineNote wineNote = new WineNote(view);
         return null;
