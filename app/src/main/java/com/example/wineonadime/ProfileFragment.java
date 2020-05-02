@@ -1,4 +1,4 @@
-package com.bottomnavigationview.fragments;
+package com.example.wineonadime;
 
 import android.os.Bundle;
 
@@ -7,15 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.wineonadime.R;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link GuideFragment#newInstance} factory method to
+ * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GuideFragment extends Fragment {
+public class ProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -25,7 +24,9 @@ public class GuideFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public GuideFragment() {
+    Button settings;
+
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
@@ -35,11 +36,11 @@ public class GuideFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GuideFragment.
+     * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GuideFragment newInstance(String param1, String param2) {
-        GuideFragment fragment = new GuideFragment();
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,6 +61,11 @@ public class GuideFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_guide, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
+
+    public void callMain(View view){
+        ((MainActivity)getActivity()).openSettings(view);
+    }
+
 }

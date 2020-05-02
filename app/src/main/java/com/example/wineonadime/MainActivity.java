@@ -26,11 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bottomnavigationview.fragments.GuideFragment;
-import com.bottomnavigationview.fragments.HomeFragment;
-import com.bottomnavigationview.fragments.MapFragment;
-import com.bottomnavigationview.fragments.ProfileFragment;
-import com.bottomnavigationview.fragments.SearchFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,10 +43,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.popupviews.LoginFragment;
-import com.popupviews.RegisterFragment;
-import com.popupviews.SettingsFragment;
-import com.supportingclasses.Wine;
 
 import org.imperiumlabs.geofirestore.GeoFirestore;
 import org.imperiumlabs.geofirestore.GeoQuery;

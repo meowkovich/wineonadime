@@ -1,4 +1,4 @@
-package com.bottomnavigationview.fragments;
+package com.example.wineonadime;
 
 import android.Manifest;
 import android.content.Context;
@@ -23,9 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import com.example.wineonadime.R;
-import com.example.wineonadime.SearchListener;
-import com.supportingclasses.Store;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

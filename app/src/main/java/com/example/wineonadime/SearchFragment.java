@@ -1,4 +1,4 @@
-package com.bottomnavigationview.fragments;
+package com.example.wineonadime;
 
 import android.os.Bundle;
 
@@ -9,10 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.wineonadime.R;
-import com.example.wineonadime.WineAdapter;
-import com.supportingclasses.Wine;
 
 import java.util.ArrayList;
 
