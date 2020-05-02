@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.wineonadime.R;
 import com.example.wineonadime.WineAdapter;
+import com.supportingclasses.Wine;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class SearchFragment extends Fragment {
-    private static ArrayList<String> displayWines;
+    private static ArrayList<Wine> displayWines;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -38,9 +39,6 @@ public class SearchFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static SearchFragment newInstance(ArrayList<String> paramDisplay) {
-        displayWines = new ArrayList<String>();
-        displayWines.add("String 1");
-        displayWines.add("String 2");
         SearchFragment fragment = new SearchFragment();
 
         return fragment;
@@ -48,6 +46,10 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        displayWines = new ArrayList<Wine>();
+        displayWines.add(new Wine("wine1", 19.99, "red", "brand1", "2014", "United States"));
+        displayWines.add(new Wine("wine2", 12.99, "red", "brand2", "2013", "United States"));
+        displayWines.add(new Wine("wine 3", 12.69, "red", "brand3", "2978", "country"));
         super.onCreate(savedInstanceState);
 
 
@@ -56,16 +58,17 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+//        displayWines = new ArrayList<Wine>();
+//        displayWines.add(new Wine("wine1", 19.99, "red", "brand1", "2014", "United States"));
+//        displayWines.add(new Wine("wine2", 12.99, "red", "brand2", "2013", "United States"));
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
-        recyclerView = new RecyclerView(getContext());
+        recyclerView = view.findViewById(R.id.searchRecycle);
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mAdapter = new WineAdapter(displayWines);
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(new WineAdapter(displayWines));
 
         return view;
     }
