@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchableActivityMap">
+    tools:context=".SearchableActivityMap"
+    android:id="@+id/frame_search_page">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/query_recycler"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

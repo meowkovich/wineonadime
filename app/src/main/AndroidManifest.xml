@@ -24,7 +24,8 @@
                 android:resource="@xml/searchable"/>
         </activity>
   
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivityMap" />
@@ -40,7 +41,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="API_KEY" />
+            android:value="AIzaSyA0hYfhM_4uXiEL4lWZZIaZX-sroQoHZFs" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

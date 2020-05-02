@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,15 +33,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import static java.sql.Types.NULL;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment
+public class MapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener
 {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -132,7 +137,8 @@ public class MapFragment extends Fragment
         });
 
         //Display current location on map
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.frame_map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().
+                                                                findFragmentById(R.id.frame_map);
         mapFragment.getMapAsync(googleMap -> {
             mMap = googleMap;
             displayMyLocation( googleMap );
@@ -147,24 +153,29 @@ public class MapFragment extends Fragment
     private void displayMyLocation( GoogleMap googleMap )
     {
         // Check if permission granted
-        int permission = ActivityCompat.checkSelfPermission( this.getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION );
+        int permission = ActivityCompat.checkSelfPermission(
+                this.getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION );
         //If not, ask for it
         if( permission == PackageManager.PERMISSION_DENIED )
         {
             ActivityCompat.requestPermissions( this.getActivity(),
-                    new String[]{ Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION );
+                    new String[]{ Manifest.permission.ACCESS_FINE_LOCATION },
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION );
         }
         //If permission granted, display marker at current location
         else
         {
-            mFusedLocationProviderClient.getLastLocation().addOnCompleteListener( this.getActivity(), task -> {
+            mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(
+                    this.getActivity(), task -> {
                 Location mLastKnownLocation = task.getResult();
                 if( task.isSuccessful() && mLastKnownLocation != null )
                 {
-                    LatLng mCurrentLatLng = new LatLng(  mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude() );
-//                    googleMap.addMarker( new MarkerOptions().position(mCurrentLatLng).title("Current Location") );
-                    googleMap.moveCamera( CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, DEFAULT_ZOOM_LEVEL) );
+                    LatLng mCurrentLatLng = new LatLng(  mLastKnownLocation.getLatitude(),
+                            mLastKnownLocation.getLongitude() );
+                    googleMap.moveCamera( CameraUpdateFactory.newLatLngZoom(mCurrentLatLng,
+                            DEFAULT_ZOOM_LEVEL) );
                     googleMap.setMyLocationEnabled(true); // for the blue dot on map
+                    googleMap.setOnInfoWindowClickListener(this);
 
                     //add markers from JSON file
                     ArrayList<Store> storeArrayList = readStoresFromJSON();
@@ -181,7 +192,25 @@ public class MapFragment extends Fragment
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults )
+    public void onInfoWindowClick( Marker marker )
+    {
+        //Load a fragment and set its args to the title of the store so we can call store in frag
+        Bundle storeBundle = new Bundle();
+        storeBundle.putString( "storename", marker.getTitle() );
+        Fragment storeFragment = new StorePageFragment();
+        storeFragment.setArguments( storeBundle );
+
+        //Navigate to new fragment using FragmentManager and FragmentTransaction
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace( R.id.frame_map, storeFragment );
+        fragmentTransaction.addToBackStack( null );
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults )
     {
         if( requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION )
         {
