@@ -19,4 +19,10 @@
     <string name="no_data_available">Sorry, we couldn\'t find anything matching your search</string>
     <string name="logout_button_text">Sign Out</string>
     <string name="delete_profile_text">Delete Profile</string>
+    <string name="dialogTitle">Filter Options</string>
+    <string name="cancelFilter">Cancel</string>
+    <string name="saveFilter">Save Filters</string>
+    <string name="lessThanMile"><![CDATA[< 1.0 Miles]]></string>
+    <string name="lessThanFiveMiles"><![CDATA[< 5.0 Miles]]></string>
+    <string name="greaterThanFiveMiles"><![CDATA[> 5.0 Miles]]></string>
 </resources>

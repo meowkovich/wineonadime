@@ -1,6 +1,7 @@
 package com.example.wineonadime;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -76,6 +79,10 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+//        ActionBar actionBar = getActivity().getActionBar();
+//        actionBar.show();
+//        actionBar.setTitle("Filter Search");
         updateCurrLocation();
         storeArrayList = new ArrayList<Store>();
         storeArrayList.addAll(readStoresFromJSON());
@@ -91,6 +98,12 @@ public class SearchFragment extends Fragment {
 
 
     }
+
+//    public boolean onCreateOptions(Menu menu) {
+//        ActionBar actionBar = getActivity().getActionBar();
+//        actionBar.show();
+//        actionBar.setTitle("Filter Search");
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

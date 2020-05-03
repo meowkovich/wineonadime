@@ -1,7 +1,9 @@
 package com.example.wineonadime;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.multidex.MultiDex;
 
 import android.Manifest;
@@ -12,6 +14,7 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -70,7 +73,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements SearchListener {
+public class MainActivity extends AppCompatActivity implements SearchListener, filterDialog.filterDialogListener {
 
     BottomNavigationView bottomNavigation;
     private FirebaseFirestore mFirestore;
@@ -130,16 +133,16 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         bottomNavigation.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        if (hideMenu) {
-            return false;
-        } else {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.search_options, menu);
-            return true;
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+//        if (hideMenu) {
+//            return false;
+//        } else {
+//            MenuInflater inflater = getMenuInflater();
+//            inflater.inflate(R.menu.search_options, menu);
+//            return true;
+//        }
+//    }
 
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -713,6 +716,50 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
     }
 
     public void filterDialog(MenuItem item) {
+
+        DialogFragment dialog = new filterDialog();
+        dialog.show(getSupportFragmentManager(), "filterDialog");
+
+        Log.w(TAG, "Filter Button Clicked");
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
+        tb.inflateMenu(R.menu.search_options_2);
+        tb.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
+        return true;
+    }
+
+    public void sendFavorite(View itemView) {
+        TextView wineName;
+        TextView winePrice;
+        TextView wineBrand;
+
+        wineName = itemView.findViewById(R.id.textViewWine);
+        winePrice = itemView.findViewById(R.id.textViewPrice);
+        wineBrand = itemView.findViewById(R.id.textViewBrand);
+
+        String wineNameString = wineName.getText().toString();
+        String wineBrandString = wineBrand.getText().toString().substring(7);
+        Double winePriceString = Double.parseDouble(winePrice.getText().toString().substring(8));
+
+        //pass into method
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
 
     }
 }

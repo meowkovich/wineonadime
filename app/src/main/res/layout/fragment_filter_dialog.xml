@@ -1,13 +1,101 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.filterDialog">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:contentDescription="@string/app_name"
+        android:padding="10dp"
+        android:scaleType="center"
+        android:text="Search Filter Options"
+        android:textSize="30dp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/wineTypeGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccentLight"
+        android:padding="5dp"
+        android:text="Wine Type"
+        android:textSize="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sparklingWine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sparkling" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/roseWine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rosé" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/whiteWine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="White" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/redWine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Red" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/distanceGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccentLight"
+        android:padding="5dp"
+        android:text="Distance From My Location"
+        android:textSize="20dp" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:checkedChip="@id/lessthan1.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/lessthan1.0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/lessThanMile" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/lessthan5.0miles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/lessThanFiveMiles" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/greaterThan5.0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/greaterThanFiveMiles" />
+
+        </LinearLayout>
+    </com.google.android.material.chip.ChipGroup>
+
+
+</LinearLayout>

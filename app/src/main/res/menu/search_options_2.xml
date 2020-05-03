@@ -4,7 +4,6 @@
 
     <item
         android:icon="@drawable/filter"
-        android:onClick="filterDialog"
         android:title="Item"
         app:showAsAction="always" />
 </menu>
