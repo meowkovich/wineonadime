@@ -384,36 +384,6 @@
                     android:background="#3E050000" />
 
                 <TextView
-                    android:id="@+id/buying"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Buying Wine"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/abhaya_libre" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:background="#3E050000" />
-
-                <TextView
-                    android:id="@+id/expert"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="How to Become a Wine Expert"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/abhaya_libre" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:background="#3E050000" />
-
-                <TextView
                     android:id="@+id/why"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -421,6 +391,81 @@
                     android:text="Why Learn About Wine"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/enhances"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Enhances Social Experiences"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/enhances2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="At its heart wine is a beverage best enjoyed in the company of others. A little bit of wine knowledge goes a long way by opening doors to new flavors and styles. Exploring wine is an inexhaustible adventure for which you'll need to enlist your friends and family."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/confidence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Confidence Buying Wine"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/confidence2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="No one likes to go to the wine aisle and feel overwhelmed. Have you bought wine based on arbitrary ratings, ambiguous tasting notes, or the label? How would you like to walk in, confidently find your favorite wines, and leave 100% satisfied?"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/improve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Confidence Buying Wine"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/improve2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Tasting/smelling wine doesn't have to be an exercise in snobbery. It only takes a brief pause to develop an awareness of what you're drinking. Knowing what you like will make it much easier to consistently find similar wines. This isn't limited to wine, learning a few basics can improve the taste/smell of just about anything."
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/personal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Personal Challenge / Satisfaction"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/abhaya_libre" />
+
+                <TextView
+                    android:id="@+id/personal2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="80dp"
+                    android:text="The wine world is immense. We like to see this as an opportunity rather than an obstacle. Do you have a favorite sports team, fashion designer, tv chef, or movie director? What if I told you that there are celebrity winemakers and that if you found your favorite winery/winemaker you'd never have to drink bad wine again?"
+                    android:textSize="18sp"
                     app:fontFamily="@font/abhaya_libre" />
 
             </LinearLayout>
