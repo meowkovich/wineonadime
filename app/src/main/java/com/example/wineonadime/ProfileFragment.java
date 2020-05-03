@@ -1,11 +1,14 @@
 package com.example.wineonadime;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +25,9 @@ import android.widget.Toolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.util.Listener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +52,12 @@ public class ProfileFragment extends Fragment {
     public String email;
 
     Button settings;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdaptor;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    ArrayList<FavoriteItem> favoritesList;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -92,10 +104,32 @@ public class ProfileFragment extends Fragment {
 
             TextView textViewEmail = (TextView) rootView.findViewById(R.id.profileEmail);
             textViewEmail.setText(email);
+
+            favoritesList = new ArrayList<>();
+//            favoritesList.add(new FavoriteItem("Name1", 19.99, "Brand1"));
+//            favoritesList.add(new FavoriteItem("Name2", 19.99, "Brand2"));
+//            favoritesList.add(new FavoriteItem("Name3", 19.99, "Brand3"));
+//            favoritesList.add(new FavoriteItem("Name4", 19.99, "Brand4"));
+//            favoritesList.add(new FavoriteItem("Name5", 19.99, "Brand5"));
+//            favoritesList.add(new FavoriteItem("Name6", 19.99, "Brand6"));
+
+            mRecyclerView = rootView.findViewById(R.id.recyclerView);
+            mRecyclerView.setHasFixedSize(true);
+            mLayoutManager = new LinearLayoutManager(getContext());
+            mAdaptor = new FavoriteAdapter(favoritesList);
+
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setAdapter(mAdaptor);
+
         }
 
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    public void addToFavorites(String name, double price, String brand) {
+        favoritesList.add(new FavoriteItem(name, price, brand));
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     public void callMain(View view){
