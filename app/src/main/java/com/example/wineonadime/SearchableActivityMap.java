@@ -6,12 +6,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,11 +25,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class SearchableActivityMap extends AppCompatActivity implements
-        SearchMapAdapter.ItemClickListener {
+        SearchMapAdapter.ItemClickListener, SearchListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    FloatingActionButton fabSearch;
 
     String query; //query passed to activity from search bar
     ArrayList<Store> resultsStores = new ArrayList<>();
@@ -44,6 +48,15 @@ public class SearchableActivityMap extends AppCompatActivity implements
             Log.v("QUERY", query);
         }
 
+        // set up floating action button for search
+        fabSearch = findViewById( R.id.floatingSearchButton );
+        fabSearch.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSearch( v );
+            }
+        });
+
         // create recyclerview for search query
         recyclerView = (RecyclerView) findViewById( R.id.query_recycler );
 
@@ -53,9 +66,18 @@ public class SearchableActivityMap extends AppCompatActivity implements
         recyclerView.setLayoutManager(layoutManager);
 
         updateListOfMatchingStoresWinesFromJSON(); //update store and wine list that match query
-        mAdapter = new SearchMapAdapter(resultsStores, resultsWines, this );
-        ((SearchMapAdapter) mAdapter).setClickListener( this );
-        recyclerView.setAdapter(mAdapter);
+        if( resultsStores.isEmpty() && resultsWines.isEmpty() )
+        {
+            TextView tvEmptyWarning = findViewById( R.id.tv_empty_view_warning );
+            recyclerView.setVisibility( View.GONE );
+            tvEmptyWarning.setVisibility( View.VISIBLE );
+        }
+        else
+        {
+            mAdapter = new SearchMapAdapter(resultsStores, resultsWines, this);
+            ((SearchMapAdapter) mAdapter).setClickListener(this);
+            recyclerView.setAdapter(mAdapter);
+        }
     }
 
     public void updateListOfMatchingStoresWinesFromJSON()
@@ -151,4 +173,32 @@ public class SearchableActivityMap extends AppCompatActivity implements
         fragmentTransaction.addToBackStack( null );
         fragmentTransaction.commit();
     }
+
+    @Override
+    public void openSearch( View view )
+    {
+        onSearchRequested();
+        Log.i("search", "onsearch called" );
+    }
+
+//    @Override
+//    public void onBackPressed()
+//    {
+//        if ( getFragmentManager().getBackStackEntryCount() > 0)
+//        {
+//            getFragmentManager().popBackStack();
+//            return;
+//        }
+//        super.onBackPressed();
+//        finish();
+//    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.home_frag ) {
+//            finish();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

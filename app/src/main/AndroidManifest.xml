@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
 
       
-        <activity android:name=".SearchableActivityMap">
+        <activity android:name=".SearchableActivityMap"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

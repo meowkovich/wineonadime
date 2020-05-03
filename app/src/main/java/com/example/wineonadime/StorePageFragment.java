@@ -3,6 +3,7 @@ package com.example.wineonadime;
 import android.Manifest;
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
@@ -11,11 +12,15 @@ import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -60,6 +65,8 @@ public class StorePageFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private Store store;
+
     // Map variables
     private final float DEFAULT_ZOOM_LEVEL = 14.0f;
     private GoogleMap mMap;
@@ -99,9 +106,23 @@ public class StorePageFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_store_page, container, false);
+
+        // Set onclick listener for button on store page
+        Button button = view.findViewById( R.id.get_directions );
+        button.setOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick( View view )
+            {
+                storePageButtonClick( view );
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store_page, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -119,7 +140,7 @@ public class StorePageFragment extends Fragment {
         TextView tvStoreName = getView().findViewById( R.id.storeName );
         TextView tvStoreAddress = getView().findViewById( R.id.storeAddress );
 
-        Store store = createStoreFromJSON();
+        this.store = createStoreFromJSON();
 
         if( store != null )
         {
@@ -129,10 +150,23 @@ public class StorePageFragment extends Fragment {
 
         //Display current location of user and store on map
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient( this.getActivity() );
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().
+        SupportMapFragment mapFragment = (ScrollViewFixedMapFragment) getChildFragmentManager().
                 findFragmentById(R.id.frame_small_map);
-        mapFragment.getMapAsync(googleMap -> {
+        mapFragment.getMapAsync(googleMap ->
+        {
             mMap = googleMap;
+
+            ScrollView scrollView = getActivity().findViewById( R.id.store_scroll_view );
+            ((ScrollViewFixedMapFragment) getChildFragmentManager()
+                    .findFragmentById(R.id.frame_small_map))
+                    .setListener(new ScrollViewFixedMapFragment.OnTouchListener() {
+                        @Override
+                        public void onTouch()
+                        {
+                            scrollView.requestDisallowInterceptTouchEvent(true);
+                        }
+                    });
+
             //Calculate padding needed for location in map
             int padding = mapFragment.getView().getWidth();
             padding = ( padding / 10 );
@@ -271,24 +305,34 @@ public class StorePageFragment extends Fragment {
 
         for( int i = 0; i < wines.size(); i++ )
         {
-            String textViewString = "";
+            //dynamically add entries based on layout for each wine
+            View wineEntry = getLayoutInflater().inflate( R.layout.store_wine_entry, null );
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT );
-            TextView tv = new TextView( getActivity() );
-            tv.setLayoutParams( layoutParams );
-            tv.setGravity( 1 ); //center textview
-            tv.setTextColor( getColor( getContext(), R.color.white ) );
+            TextView wineName = wineEntry.findViewById( R.id.entry_wine_name );
+            TextView winePrice = wineEntry.findViewById( R.id.entry_wine_price );
+            TextView wineYear = wineEntry.findViewById( R.id.entry_wine_year );
+            TextView wineBrand = wineEntry.findViewById( R.id.entry_wine_brand );
 
-            textViewString = wines.get(i).getName() + " (" + "$" + wines.get(i).getPrice() +
-                                ")" + "\n";
-            textViewString = textViewString + wines.get(i).getBrand() + " - " +
-                                wines.get(i).getYear() +"\n";
+            //Set textviews
+            wineName.setText( wines.get(i).getName() );
+            wineYear.setText( wines.get(i).getYear() );
+            wineBrand.setText( wines.get(i).getBrand() );
 
-            tv.setText( textViewString );
+            //set price to display correctly to two decimals
+            //add an extra 0 if no extra cents in price
+            double tempPrice = wines.get(i).getPrice() * 10;
+            int isPriceEvenCents = (int) tempPrice;
+            if( (isPriceEvenCents % 10) == 0 )
+            {
+                winePrice.setText("$" + wines.get(i).getPrice() + "0" );
+            }
+            else
+            {
+                winePrice.setText("$" + wines.get(i).getPrice() );
+            }
 
-            linearLayout.addView( tv );
+            //finally add to view
+            linearLayout.addView( wineEntry );
         }
 
         //Add some extra filler at the bottom so bottom navigation menu doesn't obscure last wine
@@ -318,5 +362,17 @@ public class StorePageFragment extends Fragment {
         }
 
         return json;
+    }
+
+    public void storePageButtonClick( View view )
+    {
+        String unencodedUri = "https://www.google.com/maps/dir/?api=1&destination=";
+        unencodedUri = unencodedUri + store.getAddress().getStreet() + store.getAddress().getCity()
+                + ", " + store.getAddress().getState() + " " + store.getAddress().getZipcode();
+
+        Uri uri = Uri.parse( unencodedUri );
+        Intent intent = new Intent( Intent.ACTION_VIEW, uri );
+        intent.setPackage("com.google.android.apps.maps");
+        startActivity(intent);
     }
 }

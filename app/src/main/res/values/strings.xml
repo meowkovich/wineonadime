@@ -16,4 +16,5 @@
     <string name="usernameDoesNotExist">"That username does not exist, please register to continue. "</string>
     <string name="incorrectPassword">Password is incorrect, please try again or \'Continue as Guest\'.</string>
     <string name="usernameExists">That username already exists, please enter a different username to continue.</string>
+    <string name="no_data_available">Sorry, we couldn\'t find anything matching your search</string>
 </resources>

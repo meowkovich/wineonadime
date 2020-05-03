@@ -57,7 +57,7 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.Sear
         public TextView tvStoreName;
         public TextView tvStoreCity;
         public TextView tvStoreDist;
-        public TextView tvStoreWine;
+        public TextView tvAuxLine;
         public ImageView ivIcon;
         public String realStoreName;
 
@@ -67,7 +67,7 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.Sear
             tvStoreName = view.findViewById( R.id.store_name );
             tvStoreCity = view.findViewById( R.id.store_city );
             tvStoreDist = view.findViewById( R.id.store_dist );
-            tvStoreWine = view.findViewById( R.id.store_wine_num );
+            tvAuxLine   = view.findViewById( R.id.store_wine_num ); //use depends on item type
             ivIcon = view.findViewById( R.id.entry_icon );
             view.setOnClickListener( this );
         }
@@ -108,9 +108,12 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.Sear
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    // note that since we a treating two arrays as one, position may be
+    // offset to access second array properly
     @Override
     public void onBindViewHolder(SearchMapViewHolder holder, int position)
     {
+        //In this method we are treating storeArrayList and wineArrayList as one combined array
         //Access the first "part" of the array (ie storeArrayList is the first "part")
         if( position < storeArrayList.size() )
         {
@@ -120,7 +123,7 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.Sear
             holder.realStoreName = storeArrayList.get(position).getName();
             holder.tvStoreCity.setText(storeArrayList.get(position).getAddress().getCity() + ", " +
                                         storeArrayList.get(position).getAddress().getState());
-            holder.tvStoreWine.setText(storeArrayList.get(position).getWines().size() +
+            holder.tvAuxLine.setText(storeArrayList.get(position).getWines().size() +
                                         " wines available");
             holder.ivIcon.setImageResource( R.drawable.ic_store_red_24dp ); //set to store icon
 
@@ -175,7 +178,17 @@ public class SearchMapAdapter extends RecyclerView.Adapter<SearchMapAdapter.Sear
             }
 
             //set price to display on screen
-            holder.tvStoreWine.setText("$" + currWine.getPrice() );
+            //add an extra 0 if no extra cents in price
+            double tempPrice = currWine.getPrice() * 10;
+            int isPriceEvenCents = (int) tempPrice;
+            if( (isPriceEvenCents % 10) == 0 )
+            {
+                holder.tvAuxLine.setText("$" + currWine.getPrice() + "0" );
+            }
+            else
+            {
+                holder.tvAuxLine.setText("$" + currWine.getPrice() );
+            }
         }
     }
 
