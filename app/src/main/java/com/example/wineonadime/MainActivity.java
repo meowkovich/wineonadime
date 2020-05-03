@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -88,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
     private String newPassword;
     private boolean hideMenu;
     private LatLng mLocation;
-
+    ArrayList<FavoriteItem> favorites;
+    String favoritesId;
     DatabaseReference databaseUsers;
 
     @Override
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
 
         // User Database
         databaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+        favorites = new ArrayList<>();
 
         onStart();
     }
@@ -316,11 +320,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            User user = new User(first_name, last_name, email_address);
-//                            databaseUsers.child(id).setValue(user);
-//                            Log.d(TAG, "createUserWithEmail:success");
-//                            FirebaseUser curr_user = mAuth.getCurrentUser();
-//                            createUI(curr_user);
+                            User user = new User(first_name, last_name, email_address, new ArrayList<>());
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -336,10 +336,6 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
                                     }
                                 }
                             });
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser curr_user = mAuth.getCurrentUser();
-                            updateUI(curr_user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -367,6 +363,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
             lastName = firstAndLast[1];
             email = user.getEmail();
         }
+
         openFragment(HomeFragment.newInstance("", ""));
         hideBottomBar(false);
     }
@@ -399,7 +396,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
         id = mAuth.getCurrentUser().getUid();
         // User Database
         databaseUsers = FirebaseDatabase.getInstance().getReference("Users").child(id);
-        User user = new User(first, last, email);
+        User user = new User(first, last, email, favorites);
         databaseUsers.setValue(user);
         return true;
     }
@@ -579,6 +576,32 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
 
     public String getEmail() {
         return email;
+    }
+
+    public void addToFavorites(String name, double price, String brand) {
+        FirebaseUser cUser = mAuth.getCurrentUser();
+        DatabaseReference mData = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference mDataChild = mData.child(cUser.getUid());
+        favoritesId = mDataChild.child("favorites").push().getKey();
+        mDataChild.child(favoritesId).setValue(new FavoriteItem(name, price, brand));
+
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.addToFavorites(name, price, brand);
+        favorites.add(new FavoriteItem(name, price, brand));
+
+        User user = new User(firstName, lastName, email, favorites);
+        FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, "Added to favorites.", Toast.LENGTH_SHORT);
+                } else {
+                    Toast.makeText(MainActivity.this, "Could not add to favorites.", Toast.LENGTH_SHORT);
+                }
+            }
+        });
     }
 
 
