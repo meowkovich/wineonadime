@@ -9,7 +9,7 @@ public class Wine
 {
     //Class variables
     private String name;
-    private double price;
+    private Double price;
     private String type;
     private String brand;
     private String year;
@@ -17,8 +17,8 @@ public class Wine
     private String store;
 
     //Constructor
-    public Wine(String name, double price, String type, String brand, String year,
-                     String country )
+    public Wine(String name, Double price, String type, String brand, String year,
+                String country )
     {
         this.name    = name;
         this.price   = price;
@@ -34,7 +34,7 @@ public class Wine
         this.name = name;
     }
 
-    public void setPrice( double price )
+    public void setPrice(Double price )
     {
         this.price = price;
     }
@@ -106,7 +106,7 @@ public class Wine
             String wineType = jsonObject.getString("type");
             String wineBrand = jsonObject.getString("brand");
             String wineCountry = jsonObject.getString("country");
-            double winePrice = jsonObject.getDouble("price");
+            Double winePrice = jsonObject.getDouble("price");
             String wineYear = jsonObject.getString("year");
 
             wine = new Wine(wineName, winePrice, wineType, wineBrand, wineYear,

@@ -45,9 +45,9 @@ public class WineAdapter extends RecyclerView.Adapter<WineAdapter.WineNote> {
         // -replace the contents of the view with that element
         Wine holderW = wineData.get(position);
         holder.wineName.setText(holderW.getName());
-        holder.winePrice.setText("Price: $" + holderW.getPrice().toString());
+        holder.winePrice.setText("Price: $" + holderW.getPrice());
         holder.wineBrand.setText("Brand: " + holderW.getBrand());
-        holder.wineStore.setText("Brand: " + holderW.getStore());
+        holder.wineStore.setText("Store: " + holderW.getStore());
 
     }
 

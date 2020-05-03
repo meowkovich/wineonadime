@@ -112,7 +112,7 @@ public class Store
                 String wineType = jsonWine.getString( "type" );
                 String wineBrand = jsonWine.getString( "brand" );
                 String wineCountry = jsonWine.getString( "country" );
-                double winePrice = jsonWine.getDouble( "price" );
+                Double winePrice = jsonWine.getDouble( "price" );
                 String wineYear = jsonWine.getString( "year" );
 
                 Wine wine = new Wine( wineName, winePrice, wineType, wineBrand, wineYear,
