@@ -22,7 +22,8 @@
             android:text="Settings"
             android:textColor="#FDFDFD"
             android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
 
         <Button
             android:id="@+id/editName"

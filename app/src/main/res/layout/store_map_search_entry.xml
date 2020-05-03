@@ -28,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:text="ERROR"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:fontFamily="@font/abhaya_libre"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,7 +43,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="20dp"
                     android:text="ERROR"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:fontFamily="@font/abhaya_libre"/>
 
                 <TextView
                     android:id="@+id/store_dist"
@@ -51,7 +53,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="30dp"
                     android:text="-1.0 miles away"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:fontFamily="@font/abhaya_libre"/>
 
             </LinearLayout>
 
@@ -62,7 +65,8 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="30dp"
                 android:text="xx wines available"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:fontFamily="@font/abhaya_libre"/>
         </LinearLayout>
     </LinearLayout>
 

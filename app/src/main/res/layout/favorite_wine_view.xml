@@ -27,7 +27,8 @@
             android:layout_marginTop="4dp"
             android:text="Capriccio"
             android:textColor="#1A1A1A"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:fontFamily="@font/abhaya_libre"/>
 
         <TextView
             android:id="@+id/textViewPrice"
@@ -35,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewWine"
             android:text="Price: 19.99"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:fontFamily="@font/abhaya_libre"/>
 
         <TextView
             android:id="@+id/textViewBrand"
@@ -43,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewPrice"
             android:text="Brand: Belle Glos"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:fontFamily="@font/abhaya_libre"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -65,7 +68,8 @@
                 android:paddingRight="5dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:text="Remove" />
+                android:text="Remove"
+                android:fontFamily="@font/abhaya_libre"/>
 
         </LinearLayout>
     </RelativeLayout>
