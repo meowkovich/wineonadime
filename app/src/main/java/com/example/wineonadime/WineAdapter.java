@@ -15,16 +15,20 @@ public class WineAdapter extends RecyclerView.Adapter<WineAdapter.WineNote> {
 
     public static class WineNote extends RecyclerView.ViewHolder {
 
-        public TextView wineName;
-        public TextView winePrice;
-        public TextView wineBrand;
-        public TextView wineStore;
+        private TextView wineName;
+        private TextView winePrice;
+        private TextView wineBrand;
+        private TextView wineStore;
+        private TextView wineType;
+        private TextView wineYear;
         public WineNote(View itemView) {
             super(itemView);
             wineName = itemView.findViewById(R.id.textViewWine);
             winePrice = itemView.findViewById(R.id.textViewPrice);
             wineBrand = itemView.findViewById(R.id.textViewBrand);
             wineStore = itemView.findViewById(R.id.textViewStore);
+            wineType = itemView.findViewById(R.id.textViewType);
+            wineYear = itemView.findViewById(R.id.textViewYear);
         }
     }
 
@@ -48,6 +52,8 @@ public class WineAdapter extends RecyclerView.Adapter<WineAdapter.WineNote> {
         holder.winePrice.setText("Price: $" + holderW.getPrice());
         holder.wineBrand.setText("Brand: " + holderW.getBrand());
         holder.wineStore.setText("Store: " + holderW.getStore());
+        holder.wineYear.setText("Year: " + holderW.getYear());
+        holder.wineType.setText("Type: " + holderW.getType());
 
     }
 

@@ -24,6 +24,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -709,5 +710,9 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         String storeName = store.getText().toString().substring(7);
         Log.w(TAG, "Store Name: " + storeName );
         openFragment(StorePageFragment.newInstance(storeName, ""));
+    }
+
+    public void filterDialog(MenuItem item) {
+
     }
 }

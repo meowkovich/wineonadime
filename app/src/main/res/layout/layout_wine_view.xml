@@ -48,6 +48,12 @@
                         android:textSize="18sp" />
 
                     <TextView
+                        android:id="@+id/textViewStore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Store: Bob's Mart" />
+
+                    <TextView
                         android:id="@+id/textViewPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -61,10 +67,17 @@
                         android:text="Brand: brand1" />
 
                     <TextView
-                        android:id="@+id/textViewStore"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textViewType"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Store: Bob's Mart" />
+                        android:text="Type: " />
+
+                    <TextView
+                        android:id="@+id/textViewYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Year: " />
+
                 </LinearLayout>
 
             </RelativeLayout>
@@ -81,8 +94,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="Get Directions"
-                    android:onClick="sendDirections"/>
+                    android:onClick="sendDirections"
+                    android:text="Go To Store Page" />
 
                 <Button
                     android:id="@+id/favorites_button"
