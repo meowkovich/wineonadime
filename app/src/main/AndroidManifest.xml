@@ -25,8 +25,7 @@
                 android:resource="@xml/searchable"/>
         </activity>
   
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+        <activity android:name=".MainActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivityMap" />

@@ -367,7 +367,7 @@ public class StorePageFragment extends Fragment {
     public void storePageButtonClick( View view )
     {
         String unencodedUri = "https://www.google.com/maps/dir/?api=1&destination=";
-        unencodedUri = unencodedUri + store.getAddress().getStreet() + store.getAddress().getCity()
+        unencodedUri = unencodedUri + store.getAddress().getStreet() + " " + store.getAddress().getCity()
                 + ", " + store.getAddress().getState() + " " + store.getAddress().getZipcode();
 
         Uri uri = Uri.parse( unencodedUri );
