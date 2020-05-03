@@ -585,9 +585,33 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
         favoritesId = mDataChild.child("favorites").push().getKey();
         mDataChild.child(favoritesId).setValue(new FavoriteItem(name, price, brand));
 
-        ProfileFragment fragment = new ProfileFragment();
-        fragment.addToFavorites(name, price, brand);
         favorites.add(new FavoriteItem(name, price, brand));
+
+//        User user = new User(firstName, lastName, email, favorites);
+//        FirebaseDatabase.getInstance().getReference("Users")
+//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()) {
+//                    Toast.makeText(MainActivity.this, "Added to favorites.", Toast.LENGTH_SHORT);
+//                } else {
+//                    Toast.makeText(MainActivity.this, "Could not add to favorites.", Toast.LENGTH_SHORT);
+//                }
+//            }
+//        });
+    }
+
+    public void removeFromFavorites(View itemView) {
+        FirebaseUser cUser = mAuth.getCurrentUser();
+        DatabaseReference mData = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference mDataChild = mData.child(cUser.getUid());
+        favoritesId = mDataChild.child("favorites").push().getKey();
+        //mDataChild.child(favoritesId).setValue(new FavoriteItem(name, price, brand));
+
+        ProfileFragment fragment = new ProfileFragment();
+        //fragment.addToFavorites(name, price, brand);
+        //favorites.add(new FavoriteItem(name, price, brand));
 
         User user = new User(firstName, lastName, email, favorites);
         FirebaseDatabase.getInstance().getReference("Users")
@@ -602,6 +626,10 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
                 }
             }
         });
+    }
+
+    public ArrayList<FavoriteItem> getFavorites() {
+        return favorites;
     }
 
 
@@ -765,9 +793,9 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
         TextView winePrice;
         TextView wineBrand;
 
-        wineName = itemView.findViewById(R.id.textViewWine);
-        winePrice = itemView.findViewById(R.id.textViewPrice);
-        wineBrand = itemView.findViewById(R.id.textViewBrand);
+        wineName = findViewById(R.id.textViewWine);
+        winePrice = findViewById(R.id.textViewPrice);
+        wineBrand = findViewById(R.id.textViewBrand);
 
         String wineNameString = wineName.getText().toString();
         String wineBrandString = wineBrand.getText().toString().substring(7);
