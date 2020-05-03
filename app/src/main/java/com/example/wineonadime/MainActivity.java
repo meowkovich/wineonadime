@@ -342,6 +342,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
             email = user.getEmail();
         }
         openFragment(HomeFragment.newInstance("", ""));
+        hideBottomBar(false);
     }
 
     public void updateUI(FirebaseUser user) {
