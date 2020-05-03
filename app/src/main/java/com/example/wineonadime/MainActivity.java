@@ -18,6 +18,7 @@ import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -38,6 +39,12 @@ import com.google.firebase.auth.FirebaseUser;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static java.util.jar.Pack200.Packer.ERROR;
 
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -50,18 +57,26 @@ import org.imperiumlabs.geofirestore.listeners.GeoQueryEventListener;
 
 import java.util.ArrayList;
 
+import java.util.Collection;
+
 
 public class MainActivity extends AppCompatActivity implements SearchListener {
 
     BottomNavigationView bottomNavigation;
+    private FirebaseFirestore mFirestore;
+    SharedPreferences userLog;
+    public FirebaseAuth mAuth;
+    String id;
+    String firstName;
+    String lastName;
+    String displayName;
+    private String newFirst;
+    private String newLast;
+    String email;
+    private String newPassword;
     private static FirebaseFirestore mFirestore;
-    private static FirebaseAuth mAuth;
-    private String newFirst = "";
-    private String newLast = "";
-    private String newPassword = "";
     private boolean hideMenu;
-
-
+    DatabaseReference databaseUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
 
 
         hideBottomBar(false);
+
+        // User Database
+        databaseUsers = FirebaseDatabase.getInstance().getReference("Users");
+
         onStart();
     }
 
@@ -92,8 +111,8 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
             openFragment(LoginFragment.newInstance("", ""));
         } else {
             //TODO
-            openFragment(LoginFragment.newInstance("", ""));
-            updateUI(currentUser);
+            //openFragment(LoginFragment.newInstance("", ""));
+            createUI(currentUser);
         }
     }
 
@@ -196,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         EditText password_text = findViewById(R.id.password);
         TextView error_message = findViewById(R.id.loginInfoText);
 
-        String email = username_text.getText().toString();
+        email = username_text.getText().toString();
         String password = password_text.getText().toString();
 
         signInWithEmailAndPassword(email, password);
@@ -211,13 +230,13 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            id = mAuth.getCurrentUser().getUid();
+                            createUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
 
                         // ...
@@ -229,44 +248,146 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         EditText email_text = findViewById(R.id.email_register);
         EditText password_text = findViewById(R.id.password_register);
         TextView error_message = findViewById(R.id.registerInfoText);
-        EditText firstname = findViewById(R.id.firstname_register);
-        EditText lastname = findViewById(R.id.lastname_register);
+        EditText firstName_text = findViewById(R.id.firstname_register);
+        EditText lastName_text = findViewById(R.id.lastname_register);
 
-        String email = email_text.getText().toString();
-        String password = password_text.getText().toString();
+        firstName = firstName_text.getText().toString().trim();
+        lastName = lastName_text.getText().toString().trim();
+        email = email_text.getText().toString().trim();
+        String password = password_text.getText().toString().trim();
 
-        createAccount(email, password);
+        if (firstName.isEmpty()) {
+            firstName_text.setError("First name required.");
+            firstName_text.requestFocus();
+            return;
+        }
+
+        if (lastName.isEmpty()) {
+            lastName_text.setError("Last name required.");
+            lastName_text.requestFocus();
+            return;
+        }
+
+        if (email.isEmpty()) {
+            email_text.setError("Email address required.");
+            email_text.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            email_text.setError("Enter a valid email address.");
+            email_text.requestFocus();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            password_text.setError("Password required.");
+            password_text.requestFocus();
+            return;
+        }
+
+        if (password.length() < 6) {
+            password_text.setError("Password should be at least 6 characters long.");
+            password_text.requestFocus();
+            return;
+        }
+
+        createAccount(firstName, lastName, email, password);
     }
 
-    public void createAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
+    public void createAccount(String first_name, String last_name, String email_address, String password) {
+        mAuth.createUserWithEmailAndPassword(email_address, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            User user = new User(first_name, last_name, email_address);
+//                            databaseUsers.child(id).setValue(user);
+//                            Log.d(TAG, "createUserWithEmail:success");
+//                            FirebaseUser curr_user = mAuth.getCurrentUser();
+//                            createUI(curr_user);
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "createUserWithEmail:success");
+                                        FirebaseUser curr_user = mAuth.getCurrentUser();
+                                        createUI(curr_user);
+                                    }
+                                    else {
+                                        Toast.makeText(MainActivity.this, "Registration unsuccessful.", Toast.LENGTH_SHORT);
+                                    }
+                                }
+                            });
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            FirebaseUser curr_user = mAuth.getCurrentUser();
+                            updateUI(curr_user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(MainActivity.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    public void updateUI(FirebaseUser user) {
-        //TODO have some way to have the favorites and profile set
-        if (user == null) {
-            //there is no user
-            //openFragment(HomeFragment.newInstance("", ""));
-        } else {
-            //there is some user
-            openFragment(HomeFragment.newInstance("", ""));
+    public void createUI(FirebaseUser user) {
+        // User has just signed up - update display name
+        if (firstName != null || lastName != null) {
+            displayName = firstName + " " + lastName;
+            if (user != null) {
+                UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(displayName)
+                        .build();
+                user.updateProfile(profile);
+            }
         }
+        else {
+            displayName = user.getDisplayName();
+            String[] firstAndLast = displayName.split(" ");
+            firstName = firstAndLast[0];
+            lastName = firstAndLast[1];
+            email = user.getEmail();
+        }
+        openFragment(HomeFragment.newInstance("", ""));
+    }
+
+    public void updateUI(FirebaseUser user) {
+        //TODO: have some way to have the favorites and profile set
+
+        // User has changed name - update display name
+        if (newFirst != null) {
+            firstName = newFirst;
+            newFirst = null;
+        }
+        if (newLast != null) {
+            lastName = newLast;
+            newLast = null;
+        }
+        displayName = firstName + " " + lastName;
+        if (user != null) {
+            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(displayName)
+                    .build();
+            user.updateProfile(profile);
+            updateUser(firstName, lastName);
+        }
+
+        openFragment(ProfileFragment.newInstance("", ""));
+    }
+
+    public boolean updateUser(String first, String last) {
+        id = mAuth.getCurrentUser().getUid();
+        // User Database
+        databaseUsers = FirebaseDatabase.getInstance().getReference("Users").child(id);
+        User user = new User(first, last, email);
+        databaseUsers.setValue(user);
+        return true;
     }
 
     public void openSettings(View view) {
@@ -280,7 +401,6 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                 Toast.LENGTH_LONG).show();
     }
 
-    //Test
     public void editName(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("                 Edit Name");
@@ -289,14 +409,14 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         layout.setOrientation(LinearLayout.VERTICAL);
 
         final EditText inputFirst = new EditText(this);
-        inputFirst.setHint("First Name");
+        inputFirst.setText(firstName);
         inputFirst.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         inputFirst.setSingleLine();
         inputFirst.setPadding(70, 50, 80, 40);
         layout.addView(inputFirst);
 
         final EditText inputLast = new EditText(this);
-        inputLast.setHint("Last Name");
+        inputLast.setText(lastName);
         inputLast.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         inputLast.setSingleLine();
         inputLast.setPadding(70, 20, 80, 40);
@@ -308,6 +428,8 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         builder.setPositiveButton("Save", (dialog, which) -> {
             newFirst = inputFirst.getText().toString();
             newLast = inputLast.getText().toString();
+            FirebaseUser curr_user = mAuth.getCurrentUser();
+            updateUI(curr_user);
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
@@ -353,6 +475,56 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         // Set up the buttons
         builder.setPositiveButton("Save", (dialog, which) -> {
             newPassword = input.getText().toString();
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user != null) {
+                user.updatePassword(newPassword)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "Password successfully changed.", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(), "Unable to change password.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
+
+    public void deleteAccount(View view) {
+        // Create "pop up"
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("          Delete Account");
+        builder.setMessage("Are you sure you want to delete your account? This is a permanent action.");
+
+        // Set up the buttons
+        builder.setPositiveButton("Delete Account", (dialog, which) -> {
+            FirebaseUser user = mAuth.getCurrentUser();
+            // Remove user from database
+            id = mAuth.getCurrentUser().getUid();
+            databaseUsers = FirebaseDatabase.getInstance().getReference("Users").child(id);
+            databaseUsers.removeValue();
+
+            // Remove user from authentication
+            if (user != null) {
+                user.delete()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "Successfully deleted account.", Toast.LENGTH_SHORT).show();
+                                    openFragment(LoginFragment.newInstance("", ""));
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(), "Unable to delete account.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         builder.show();
@@ -400,6 +572,15 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                         public void onKeyEntered(String s, GeoPoint geoPoint) {
                             //this should not happen
                         }
+    public String getFirstName() { return firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void search(View view) {
 
                         @Override
                         public void onGeoQueryError(Exception e) {

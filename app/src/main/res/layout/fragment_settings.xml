@@ -80,6 +80,7 @@
             android:fontFamily="@font/abhaya_libre"
             android:padding="30dp"
             android:text="Delete Account"
+            android:onClick="deleteAccount"
             android:textAllCaps="true"
             android:textSize="25sp" />
     </LinearLayout>
