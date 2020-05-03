@@ -13,7 +13,8 @@
         android:padding="10dp"
         android:scaleType="center"
         android:text="Search Filter Options"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:fontFamily="@font/abhaya_libre"/>
 
     <TextView
         android:id="@+id/wineTypeGroup"
@@ -22,7 +23,8 @@
         android:background="@color/colorAccentLight"
         android:padding="5dp"
         android:text="Wine Type"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:fontFamily="@font/abhaya_libre"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,25 +35,29 @@
             android:id="@+id/sparklingWine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sparkling" />
+            android:text="Sparkling"
+            android:fontFamily="@font/abhaya_libre"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/roseWine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rosé" />
+            android:text="Rosé"
+            android:fontFamily="@font/abhaya_libre"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/whiteWine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="White" />
+            android:text="White"
+            android:fontFamily="@font/abhaya_libre"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/redWine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Red" />
+            android:text="Red"
+            android:fontFamily="@font/abhaya_libre"/>
     </LinearLayout>
 
     <TextView
@@ -61,7 +67,8 @@
         android:background="@color/colorAccentLight"
         android:padding="5dp"
         android:text="Distance From My Location"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:fontFamily="@font/abhaya_libre"/>
 
     <com.google.android.material.chip.ChipGroup
         android:layout_width="match_parent"
@@ -78,21 +85,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/lessThanMile" />
+                android:text="@string/lessThanMile"
+                android:fontFamily="@font/abhaya_libre"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/lessthan5.0miles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/lessThanFiveMiles" />
+                android:text="@string/lessThanFiveMiles"
+                android:fontFamily="@font/abhaya_libre"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/greaterThan5.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/greaterThanFiveMiles" />
+                android:text="@string/greaterThanFiveMiles"
+                android:fontFamily="@font/abhaya_libre"/>
 
         </LinearLayout>
     </com.google.android.material.chip.ChipGroup>

@@ -765,9 +765,9 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
         TextView winePrice;
         TextView wineBrand;
 
-        wineName = itemView.findViewById(R.id.textViewWine);
-        winePrice = itemView.findViewById(R.id.textViewPrice);
-        wineBrand = itemView.findViewById(R.id.textViewBrand);
+        wineName = (TextView) findViewById(R.id.textViewWine);
+        winePrice = findViewById(R.id.textViewPrice);
+        wineBrand = findViewById(R.id.textViewBrand);
 
         String wineNameString = wineName.getText().toString();
         String wineBrandString = wineBrand.getText().toString().substring(7);
