@@ -6,10 +6,12 @@ import androidx.multidex.MultiDex;
 
 import android.Manifest;
 import android.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -36,6 +38,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static java.util.jar.Pack200.Packer.ERROR;
 
@@ -56,7 +59,6 @@ import org.imperiumlabs.geofirestore.GeoQuery;
 import org.imperiumlabs.geofirestore.listeners.GeoQueryEventListener;
 
 import java.util.ArrayList;
-
 import java.util.Collection;
 
 
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
 
     BottomNavigationView bottomNavigation;
     private FirebaseFirestore mFirestore;
-    SharedPreferences userLog;
     public FirebaseAuth mAuth;
     String id;
     String firstName;
@@ -74,8 +75,9 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
     private String newLast;
     String email;
     private String newPassword;
-    private static FirebaseFirestore mFirestore;
     private boolean hideMenu;
+    private LatLng mLocation;
+
     DatabaseReference databaseUsers;
 
     @Override
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         hideMenu = true;
-
+        mLocation = new LatLng(43.0731, 89.4012);
 
 
         hideBottomBar(false);
@@ -122,10 +124,9 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        if(hideMenu) {
+        if (hideMenu) {
             return false;
-        }
-        else {
+        } else {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.search_options, menu);
             return true;
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                 break;
             case R.id.search_wines_button:
                 hideMenu = false;
-                ArrayList<String> displayWines = new ArrayList<>();
+                ArrayList<Wine> displayWines = new ArrayList<Wine>();
                 populateWines(displayWines);
                 openFragment(SearchFragment.newInstance(displayWines));
                 break;
@@ -183,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                         return true;
                     case R.id.navigation_search:
                         hideMenu = false;
-                        ArrayList<String> displayWines = new ArrayList<>();
+                        ArrayList<Wine> displayWines = new ArrayList<Wine>();
                         populateWines(displayWines);
                         openFragment(SearchFragment.newInstance(displayWines));
                         return true;
@@ -316,8 +317,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser curr_user = mAuth.getCurrentUser();
                                         createUI(curr_user);
-                                    }
-                                    else {
+                                    } else {
                                         Toast.makeText(MainActivity.this, "Registration unsuccessful.", Toast.LENGTH_SHORT);
                                     }
                                 }
@@ -346,8 +346,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                         .build();
                 user.updateProfile(profile);
             }
-        }
-        else {
+        } else {
             displayName = user.getDisplayName();
             String[] firstAndLast = displayName.split(" ");
             firstName = firstAndLast[0];
@@ -483,8 +482,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Password successfully changed.", Toast.LENGTH_SHORT).show();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(getApplicationContext(), "Unable to change password.", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -518,8 +516,7 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Successfully deleted account.", Toast.LENGTH_SHORT).show();
                                     openFragment(LoginFragment.newInstance("", ""));
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(getApplicationContext(), "Unable to delete account.", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -530,113 +527,113 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
         builder.show();
     }
 
-    public void populateWines(ArrayList<String> displayWines) {
-        CollectionReference stores = mFirestore.getInstance().collection("wines-collection");
-        CollectionReference wines = mFirestore.getInstance().collection("stores-collection");
-        ArrayList<Wine> winesList = new ArrayList<Wine>();
-        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);; // Save the instance
+    public void populateWines(ArrayList<Wine> displayWines) {
+
+        //update location information
+        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 12;
-        GeoFirestore geoFirestoreStores = new GeoFirestore(stores);
-
-        //getting location information
-        // Check if permission granted
-        int permission = ActivityCompat.checkSelfPermission( this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION );
-        //If not, ask for it
-        if( permission == PackageManager.PERMISSION_DENIED )
-        {
+        int permission = ActivityCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permission == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{ Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION );
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
-        //If permission granted get wines in nearby area and display in listview
-        else
-        {
-            mFusedLocationProviderClient.getLastLocation().addOnCompleteListener( this, task -> {
+        //If permission granted update the location
+        else {
+            mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(this, task -> {
                 Location mLastKnownLocation = task.getResult();
-                if( task.isSuccessful() && mLastKnownLocation != null )
-                {
-                    LatLng mCurrentLatLng = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude() );
-                    GeoQuery geoQuery = geoFirestoreStores.queryAtLocation(new GeoPoint(mCurrentLatLng.latitude, mCurrentLatLng.longitude),1);
-                    geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+                if (task.isSuccessful() && mLastKnownLocation != null) {
+                    LatLng mCurrentLatLng = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                    setLocation(mCurrentLatLng);
+                }
+            });
+        }
 
-                        @Override
-                        public void onKeyMoved(String s, GeoPoint geoPoint) {
-                            //this should not happed
-                        }
+        findStores(displayWines);
 
-                        @Override
-                        public void onKeyExited(String s) {
-                            //this should not happen
-                        }
+    }
 
-                        @Override
-                        public void onKeyEntered(String s, GeoPoint geoPoint) {
-                            //this should not happen
-                        }
-    public String getFirstName() { return firstName; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public String getLastName() { return lastName; }
+    public String getLastName() {
+        return lastName;
+    }
 
     public String getEmail() {
         return email;
     }
 
-    public void search(View view) {
 
-                        @Override
-                        public void onGeoQueryError(Exception e) {
-                            Log.d(ERROR, "An error occurred loading the query documents.");
+    public void findStores(ArrayList<Wine> displayWines) {
+        CollectionReference stores = mFirestore.collection("stores");
+        GeoFirestore geoFirestoreStores = new GeoFirestore(stores);
+
+        GeoQuery query = geoFirestoreStores.queryAtLocation(new GeoPoint(getLocation().latitude, getLocation().longitude), 10);
+        query.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyMoved(String s, GeoPoint geoPoint) {
+
+            }
+
+            @Override
+            public void onKeyExited(String s) {
+
+            }
+
+            @Override
+            public void onKeyEntered(String s, GeoPoint geoPoint) {
+                //this should not happen
+            }
+
+            @Override
+            public void onGeoQueryError(Exception e) {
+                Log.d(ERROR, "An error occurred loading the query documents.");
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                Log.d(TAG, "All initial data has been loaded and events have been fired!");
+                //query.getQueries().
+                displayWines.add(findWine(null, null, null));
+            }
+        });
+    }
+
+
+    public Wine findWine(Double sku, String store, Double price) {
+        CollectionReference oneWine = mFirestore.collection(sku.toString());
+        ArrayList<Wine> wine = new ArrayList<Wine>();
+        oneWine.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Wine wineHolder = new Wine(document.getData().get("wine-name").toString(),
+                                        price, document.getData().get("wine-type").toString(),
+                                        document.getData().get("wine-brand").toString(),
+                                        document.getData().get("wine-year").toString(),
+                                        document.getData().get("wine-country").toString());
+                                wineHolder.setStore(store);
+                                wine.add(wineHolder);
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
                         }
-
-                        @Override
-                        public void onGeoQueryReady() {
-                            Log.d(TAG, "All initial data has been loaded and events have been fired!");
-                        }
-                });
-
-//                    for(int i = 0; i < geoQuery.getQueries().size(); ++i) {
-//                        Query store = geoQuery.getQueries().get(i).addS
-//                        Log.d(TAG, store. + " => " + document.getData());
-//                    }
-                    wines.get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            Log.d(TAG, document.getId() + " => " + document.getData());
-                                        }
-                                    } else {
-                                        Log.w(TAG, "Error getting documents.", task.getException());
-                                    }
-                                }
-                            });
-
-                    stores.get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            Log.d(TAG, document.getId() + " => " + document.getData());
-                                        }
-                                    } else {
-                                        Log.w(TAG, "Error getting documents.", task.getException());
-                                    }
-                                }
-                            });
-
-
-
-                    for (Wine wine: winesList) {
-                        displayWines.add(String.format("Wine:%s\nCheapest Price: $%d\nStore:", wine.getName(), wine.getPrice(), wine.getStore()));
                     }
-
-
-
-                }
-            });
+                });
+        if (wine.size() > 0) {
+            return wine.get(0);
         }
+        return null;
+    }
 
+    public void setLocation(LatLng location) {
+        mLocation = location;
+    }
 
+    public LatLng getLocation() {
+        return mLocation;
     }
 }

@@ -17,10 +17,14 @@ public class WineAdapter extends RecyclerView.Adapter<WineAdapter.WineNote> {
 
         public TextView wineName;
         public TextView winePrice;
+        public TextView wineBrand;
+        public TextView wineStore;
         public WineNote(View itemView) {
             super(itemView);
             wineName = itemView.findViewById(R.id.textViewWine);
             winePrice = itemView.findViewById(R.id.textViewPrice);
+            wineBrand = itemView.findViewById(R.id.textViewBrand);
+            wineStore = itemView.findViewById(R.id.textViewStore);
         }
     }
 
@@ -42,6 +46,8 @@ public class WineAdapter extends RecyclerView.Adapter<WineAdapter.WineNote> {
         Wine holderW = wineData.get(position);
         holder.wineName.setText(holderW.getName());
         holder.winePrice.setText("Price: $" + holderW.getPrice().toString());
+        holder.wineBrand.setText("Brand: " + holderW.getBrand());
+        holder.wineStore.setText("Brand: " + holderW.getStore());
 
     }
 

@@ -34,18 +34,14 @@ public class SearchFragment extends Fragment {
      * @return A new instance of fragment SearchFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(ArrayList<String> paramDisplay) {
+    public static SearchFragment newInstance(ArrayList<Wine> paramDisplay) {
         SearchFragment fragment = new SearchFragment();
-
+        displayWines = paramDisplay;
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        displayWines = new ArrayList<Wine>();
-        displayWines.add(new Wine("wine1", 19.99, "red", "brand1", "2014", "United States"));
-        displayWines.add(new Wine("wine2", 12.99, "red", "brand2", "2013", "United States"));
-        displayWines.add(new Wine("wine 3", 12.69, "red", "brand3", "2978", "country"));
         super.onCreate(savedInstanceState);
 
 
