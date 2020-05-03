@@ -771,9 +771,9 @@ public class MainActivity extends AppCompatActivity implements SearchListener, f
 
         String wineNameString = wineName.getText().toString();
         String wineBrandString = wineBrand.getText().toString().substring(7);
-        Double winePriceString = Double.parseDouble(winePrice.getText().toString().substring(8));
+        double winePriceString = Double.parseDouble(winePrice.getText().toString().substring(8));
 
-        //pass into method
+        addToFavorites(wineNameString, winePriceString, wineBrandString);
     }
 
     @Override
