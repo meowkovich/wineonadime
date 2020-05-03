@@ -1,6 +1,5 @@
 package com.example.wineonadime;
 
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,9 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.MediaController;
-import android.widget.ScrollView;
-import android.widget.VideoView;
 
 /**
  * A simple {@link Fragment} subclass.

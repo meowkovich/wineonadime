@@ -14,6 +14,7 @@ public class Wine
     private String brand;
     private String year;
     private String country;
+    private String store;
 
     //Constructor
     public Wine(String name, double price, String type, String brand, String year,
@@ -58,12 +59,15 @@ public class Wine
         this.country = country;
     }
 
+    public void setStore(String store) {this.store = store;}
+
+
     //Getters
     public String getName()
     {
         return this.name;
     }
-
+  
     public double getPrice()
     {
         return this.price;
@@ -88,6 +92,8 @@ public class Wine
     {
         return this.country;
     }
+  
+    public String getStore() {return this.store;}
 
     //Helpers
     public static Wine buildWineFromJSONData( JSONObject jsonObject )

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/distance_option"
+        android:enabled="true"
+        android:title="Filter By Distance"
+        android:visible="true"
+        app:showAsAction="never">
+        <menu>
+            <group
+                android:id="@+id/distance_group"
+                android:checkableBehavior="single"
+                android:enabled="true"
+                android:visible="true">
+                <item
+                    android:id="@+id/mi0.5"
+                    android:checkable="false"
+                    android:title="0.5 Mile Radius" />
+                <item
+                    android:id="@+id/mi1.0"
+                    android:checkable="false"
+                    android:title="1.0 Mile Radius" />
+                <item
+                    android:id="@+id/mi2.0"
+                    android:checkable="false"
+                    android:title="2.0 Mile Radius" />
+                <item
+                    android:id="@+id/mi5.0"
+                    android:checkable="false"
+                    android:title="5.0 Mile Radius" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/wine_type"
+        android:title="Filter By Wine Type"
+        app:showAsAction="never">
+        <menu>
+            <group
+                android:id="@+id/wine_type_group"
+                android:checkableBehavior="all"
+                android:enabled="true"
+                android:visible="true">
+                <item
+                    android:id="@+id/rose_wine"
+                    android:checkable="true"
+                    android:title="Rosé" />
+                <item
+                    android:id="@+id/white_wine"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="White" />
+                <item
+                    android:id="@+id/red_wine"
+                    android:checkable="true"
+                    android:title="Red" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/sort"
+        android:title="Sort By"
+        app:showAsAction="never" >
+        <menu>
+            <group
+                android:id="@+id/sort_by_group"
+                android:checkableBehavior="single"
+                android:enabled="true"
+                android:visible="true">
+                <item
+                    android:id="@+id/price_highlow"
+                    android:checkable="false"
+                    android:title="Price High to Low" />
+                <item
+                    android:id="@+id/price_lowhigh"
+                    android:checkable="false"
+                    android:title="Price Low to High" />
+            </group>
+        </menu>
+    </item>
+</menu>
