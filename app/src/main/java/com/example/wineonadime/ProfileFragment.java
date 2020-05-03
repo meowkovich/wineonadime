@@ -91,6 +91,7 @@ public class ProfileFragment extends Fragment {
         firstName = ((MainActivity)getActivity()).getFirstName();
         lastName = ((MainActivity)getActivity()).getLastName();
         email = ((MainActivity)getActivity()).getEmail();
+        favoritesList = ((MainActivity)getActivity()).getFavorites();
     }
 
     @Override
@@ -105,7 +106,7 @@ public class ProfileFragment extends Fragment {
             TextView textViewEmail = (TextView) rootView.findViewById(R.id.profileEmail);
             textViewEmail.setText(email);
 
-            favoritesList = new ArrayList<>();
+
 //            favoritesList.add(new FavoriteItem("Name1", 19.99, "Brand1"));
 //            favoritesList.add(new FavoriteItem("Name2", 19.99, "Brand2"));
 //            favoritesList.add(new FavoriteItem("Name3", 19.99, "Brand3"));
@@ -127,10 +128,10 @@ public class ProfileFragment extends Fragment {
         return rootView;
     }
 
-    public void addToFavorites(String name, double price, String brand) {
-        favoritesList.add(new FavoriteItem(name, price, brand));
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    }
+//    public void addToFavorites(String name, double price, String brand) {
+//        favoritesList.add(new FavoriteItem(name, price, brand));
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//    }
 
     public void callMain(View view){
         ((MainActivity)getActivity()).openSettings(view);
