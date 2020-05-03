@@ -1,10 +1,15 @@
 package com.example.wineonadime;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Wine
 {
     //Class variables
     private String name;
-    private Double price;
+    private double price;
     private String type;
     private String brand;
     private String year;
@@ -12,7 +17,7 @@ public class Wine
     private String store;
 
     //Constructor
-    public Wine(String name, Double price, String type, String brand, String year,
+    public Wine(String name, double price, String type, String brand, String year,
                      String country )
     {
         this.name    = name;
@@ -29,7 +34,7 @@ public class Wine
         this.name = name;
     }
 
-    public void setPrice( Double price )
+    public void setPrice( double price )
     {
         this.price = price;
     }
@@ -62,8 +67,8 @@ public class Wine
     {
         return this.name;
     }
-
-    public Double getPrice()
+  
+    public double getPrice()
     {
         return this.price;
     }
@@ -87,7 +92,33 @@ public class Wine
     {
         return this.country;
     }
-
+  
     public String getStore() {return this.store;}
 
+    //Helpers
+    public static Wine buildWineFromJSONData( JSONObject jsonObject )
+    {
+        Wine wine = null;
+
+        try
+        {
+            String wineName = jsonObject.getString("name");
+            String wineType = jsonObject.getString("type");
+            String wineBrand = jsonObject.getString("brand");
+            String wineCountry = jsonObject.getString("country");
+            double winePrice = jsonObject.getDouble("price");
+            String wineYear = jsonObject.getString("year");
+
+            wine = new Wine(wineName, winePrice, wineType, wineBrand, wineYear,
+                    wineCountry);
+        }
+        catch( JSONException e )
+        {
+            e.printStackTrace();
+            Log.i( "jsondata", "read stores error" );
+            return null;
+        }
+
+        return wine;
+    }
 }

@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchableActivityMap">
+
+      
+        <activity android:name=".SearchableActivityMap"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -22,11 +25,13 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
         <activity android:name=".MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivityMap" />
         </activity>
+      
         <activity android:name=".LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +42,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDXuzjcAfBCvG85KwVh7S4cV5P_MjdRPEs" />
+            android:value="AIzaSyA0hYfhM_4uXiEL4lWZZIaZX-sroQoHZFs" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

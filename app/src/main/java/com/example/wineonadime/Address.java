@@ -70,4 +70,14 @@ public class Address
     {
         return this.zipcode;
     }
+
+    public String getFormattedAddress()
+    {
+        String fAddress = "";
+        fAddress = getStreet() + "\n";
+        fAddress = fAddress + getCity() + ", " + getState() + ", " + getCountry() + "\n";
+        fAddress = fAddress + getZipcode();
+
+        return fAddress;
+    }
 }

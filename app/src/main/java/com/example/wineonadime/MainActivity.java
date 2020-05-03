@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -202,7 +203,11 @@ public class MainActivity extends AppCompatActivity implements SearchListener {
     }
 
     @Override
-    public void openSearch(View view) {
+    public void openSearch( View view )
+    {
+        //trying to add the map fragment to backstack but it would not work
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.addToBackStack(null);
         onSearchRequested();
         Log.i("search", "onsearch called");
     }
