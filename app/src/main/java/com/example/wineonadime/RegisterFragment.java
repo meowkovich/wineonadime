@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RegisterFragment#newInstance} factory method to
@@ -39,7 +38,6 @@ public class RegisterFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null)
             activity.hideBottomBar(true);
-
         return view;
     }
 

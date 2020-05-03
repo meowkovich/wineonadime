@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".RegisterFragment">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -47,15 +47,35 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.831">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/firstname_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="First Name" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lastname_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="Last Name" />
+
             <EditText
                 android:id="@+id/email_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ems="10"
-                android:hint="EmailAddress"
+                android:hint="Email Address"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/colorPrimaryDark" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
                 android:id="@+id/password_register"
@@ -67,14 +87,20 @@
                 android:inputType="textPassword"
                 android:textColor="@color/colorPrimaryDark" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/signup_register"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:background="@color/colorPrimaryDark"
-                android:padding="12dp"
                 android:onClick="register"
+                android:padding="12dp"
                 android:text="@string/signup_button_text"
                 android:textColor="@color/white" />
 
